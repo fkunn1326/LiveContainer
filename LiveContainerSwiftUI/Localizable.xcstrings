@@ -15,6 +15,12 @@
             "state" : "translated",
             "value" : "添加到主屏幕"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "На экран «Домой»"
+          }
         }
       }
     },
@@ -31,6 +37,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你确定要卸载%@吗？"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы уверены, что хотите удалить %@?"
           }
         }
       }
@@ -49,6 +61,12 @@
             "state" : "translated",
             "value" : "确认卸载"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подтверждение удаления"
+          }
         }
       }
     },
@@ -65,6 +83,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "复制启动链接"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скопировать URL для запуска приложения"
           }
         }
       }
@@ -83,6 +107,12 @@
             "state" : "translated",
             "value" : "创建AppClip"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать ярлык для запуска приложения"
+          }
         }
       }
     },
@@ -99,6 +129,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你希望删除%@的数据吗？你可以保留以便以后使用"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы действительно хотите удалить папку с данными приложения %@? Вы можете сохранить ее для будущей повторной установки приложения."
           }
         }
       }
@@ -117,6 +153,12 @@
             "state" : "translated",
             "value" : "删除数据"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить папку с данными приложения"
+          }
         }
       }
     },
@@ -133,6 +175,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "立即启动"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запустить"
           }
         }
       }
@@ -151,6 +199,12 @@
             "state" : "translated",
             "value" : "锁定"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ЗАБЛОКИРОВАНО"
+          }
         }
       }
     },
@@ -167,6 +221,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "数据文件夹未创建"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Папка с данными приложения еще не создана"
           }
         }
       }
@@ -185,6 +245,12 @@
             "state" : "translated",
             "value" : "打开数据文件夹"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть папку с данными приложения"
+          }
         }
       }
     },
@@ -201,6 +267,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "启动"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пуск"
           }
         }
       }
@@ -219,6 +291,12 @@
             "state" : "translated",
             "value" : "保存App图标"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить иконку приложения"
+          }
         }
       }
     },
@@ -235,6 +313,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "卸载"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить"
           }
         }
       }
@@ -253,6 +337,12 @@
             "state" : "translated",
             "value" : "请为LiveContainer启用JIT。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Используйте предпочтительный способ активации JIT для этого LiveContainer."
+          }
         }
       }
     },
@@ -270,6 +360,12 @@
             "state" : "translated",
             "value" : "等待JIT"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ожидание активации JIT"
+          }
         }
       }
     },
@@ -286,6 +382,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "终止安装"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отмена установки"
           }
         }
       }
@@ -328,6 +430,24 @@
               }
             }
           }
+        },
+        "ru" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld приложение всего"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld приложений всего"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -344,6 +464,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "初始化AppInfo失败!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка инциализации AppInfo"
           }
         }
       }
@@ -362,6 +488,12 @@
             "state" : "translated",
             "value" : "未找到App!"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приложение не найдено."
+          }
         }
       }
     },
@@ -378,6 +510,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未找到App包。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пакет приложения не найден."
           }
         }
       }
@@ -396,6 +534,12 @@
             "state" : "translated",
             "value" : "请输入链接"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите URL или URL-схему"
+          }
         }
       }
     },
@@ -412,6 +556,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "隐藏App"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрытые приложения"
           }
         }
       }
@@ -430,6 +580,12 @@
             "state" : "translated",
             "value" : "在App设置中可隐藏App"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрыть приложение в настройках"
+          }
         }
       }
     },
@@ -446,6 +602,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "读取Info.plist失败。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка чтения файла приложения Info.plist."
           }
         }
       }
@@ -464,6 +626,12 @@
             "state" : "translated",
             "value" : "安装为新App"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Установить как новое приложение"
+          }
         }
       }
     },
@@ -480,6 +648,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "安装"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Установка"
           }
         }
       }
@@ -498,6 +672,12 @@
             "state" : "translated",
             "value" : "已有相同包名的App存在。请从下列App中选择一个替换或安装为新App。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уже существует приложение с таким идентификатором, замените или установите как новое."
+          }
         }
       }
     },
@@ -514,6 +694,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "点击加号按钮安装App"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажмите кнопку «+» для установки приложений"
           }
         }
       }
@@ -532,6 +718,12 @@
             "state" : "translated",
             "value" : "无法读取IPA。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Невозможно получить доступ к IPA"
+          }
         }
       }
     },
@@ -548,6 +740,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请在主LiveContainer中管理App"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управляйте приложениями в основном LiveContainer"
           }
         }
       }
@@ -566,6 +764,12 @@
             "state" : "translated",
             "value" : "App"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приложения"
+          }
         }
       }
     },
@@ -582,6 +786,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "打开链接"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть ссылку"
           }
         }
       }
@@ -600,6 +810,12 @@
             "state" : "translated",
             "value" : "协议“%@”无法被LiveContainer中安装的任何App打开。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Невозможно открыть схему «%@» никаким установленным приложением из LiveContainer."
+          }
         }
       }
     },
@@ -616,6 +832,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "App签名成功，但以下文件签名失败。App有可能可以正常运行。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приложение успешно подписано, но не получилось подписать следующие файлы. Вы можете пользоваться приложением, но возможны ошибки и аварийные закрытия."
           }
         }
       }
@@ -634,6 +856,12 @@
             "state" : "translated",
             "value" : "输入的链接无效，请检查后重试。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введено неверное значение, проверьте и попробуйте снова"
+          }
         }
       }
     },
@@ -650,6 +878,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "旋转锁定"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Блокировка ориентации экрана"
           }
         }
       }
@@ -668,6 +902,12 @@
             "state" : "translated",
             "value" : "横屏"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Горизонтальный режим"
+          }
         }
       }
     },
@@ -684,6 +924,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "竖屏"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вертикальный режим"
           }
         }
       }
@@ -702,6 +948,12 @@
             "state" : "translated",
             "value" : "此App的数据当前在%@中。打开%@至App界面后再试。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Данные приложения теперь в %@. Откройте %@ и запустите приложение на экране «Приложения» снова"
+          }
         }
       }
     },
@@ -718,6 +970,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "包文件名"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Файл приложения"
           }
         }
       }
@@ -736,6 +994,12 @@
             "state" : "translated",
             "value" : "绕过AssertBarrierOnQueue"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игнорировать ошибку AssertBarrierOnQueue"
+          }
         }
       }
     },
@@ -752,6 +1016,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "可能解决一些游戏崩溃的问题，但可能使得游戏变得不稳定。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Может предовратить аварийную остановку некоторых игр, но может вызвать нестабильную работу."
           }
         }
       }
@@ -770,6 +1040,12 @@
             "state" : "translated",
             "value" : "数据文件夹"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Папка с данными приложения"
+          }
         }
       }
     },
@@ -786,6 +1062,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "修复黑屏"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Исправить «ошибку черного экрана»"
           }
         }
       }
@@ -804,6 +1086,12 @@
             "state" : "translated",
             "value" : "如果App启动时黑屏，并在10秒后崩溃，启用这个选项。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включите, если приложение ничего не показывает при запуске и аварийно завершается примерно через 10 секунд."
+          }
         }
       }
     },
@@ -820,6 +1108,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "修复"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Исправления"
           }
         }
       }
@@ -838,6 +1132,12 @@
             "state" : "translated",
             "value" : "(旧方法)修复文件导入"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(Устаревшая опция) Исправить выбор файлов в приложении"
+          }
         }
       }
     },
@@ -854,6 +1154,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "若导入文件时点击“打开”没有反应，可启用本选项。启用后所有导入的文件会被复制到App数据文件夹的Inbox目录下。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Исправляет выбор файлов, когда кнопка «Открыть» неактивна, копированием выбранного файла в папку «Inbox» приложения. Данная папка доступна в папке данных приложения."
           }
         }
       }
@@ -872,6 +1178,12 @@
             "state" : "translated",
             "value" : "强制重新签名"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Принудительно подписать"
+          }
         }
       }
     },
@@ -888,6 +1200,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "如果App启动时的报错包含“Invalid Signature”，则可以尝试强制重新签名。如果仍然报错，则可能需要刷新免JIT证书。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пытается подписать приложение снова, если оно запускается с ошибкой «Invalid Signature». Если опция не работает, перевыпустите JIT-less сертификат."
           }
         }
       }
@@ -906,6 +1224,12 @@
             "state" : "translated",
             "value" : "隐藏App"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрыть приложение"
+          }
         }
       }
     },
@@ -922,6 +1246,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "要完全隐藏App，请在设置中启用严格隐藏模式。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для полного скрытия приложений, включите строгое сокрытие приложений в настройках."
           }
         }
       }
@@ -940,6 +1270,12 @@
             "state" : "translated",
             "value" : "忽略dlopen时的错误"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игнорировать ошибки при открытии динамических библиотек"
+          }
         }
       }
     },
@@ -956,6 +1292,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "可能解决类似dlsym(xxxx,xxxx): symbol not found的问题"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Может решить ошибки типа «dlsym(xxxx, xxxx): symbol not found»"
           }
         }
       }
@@ -974,6 +1316,12 @@
             "state" : "translated",
             "value" : "带JIT启动"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запустить с режимом JIT"
+          }
         }
       }
     },
@@ -990,6 +1338,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在启动App前LiveContainer会尝试获取JIT权限。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LiveContainer будет запрашивать права на JIT перед запуском приложения."
           }
         }
       }
@@ -1008,6 +1362,12 @@
             "state" : "translated",
             "value" : "锁定App"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заблокировать приложение"
+          }
         }
       }
     },
@@ -1024,6 +1384,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "创建新的数据文件夹"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новая папка данных приложения"
           }
         }
       }
@@ -1042,6 +1408,12 @@
             "state" : "translated",
             "value" : "未创建"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не создана"
+          }
         }
       }
     },
@@ -1058,6 +1430,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重命名数据文件夹"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переименовать папку данных приложения"
           }
         }
       }
@@ -1076,6 +1454,12 @@
             "state" : "translated",
             "value" : "签名工具"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Метод подписи приложений"
+          }
         }
       }
     },
@@ -1092,6 +1476,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "转换为私有App"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Преобразовать в приложение для одного LiveContainer"
           }
         }
       }
@@ -1110,6 +1500,12 @@
             "state" : "translated",
             "value" : "将App此转换为私有App允许您在文件App中访问其数据和模块，但它不能由其他LiveContainers运行。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перемещение данного приложения в личную папку позволяет получить доступ к данным и твикам в приложении «Файлы», но приложение не может быть запущено другими экземплярами LiveContainer."
+          }
         }
       }
     },
@@ -1126,6 +1522,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "转换为共享App"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Преобразовать в общее приложение для нескольких LiveContainer"
           }
         }
       }
@@ -1144,6 +1546,12 @@
             "state" : "translated",
             "value" : "将此App移动到AppGroup以允许其他LiveContainers运行此App，并保留其所有数据和模块。如果你想访问它的数据和模块，请将其转换为私有App。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перемещение этого приложения в группу приложений позволяет запускать данное приложение другими экземплярами LiveContainer со всеми данными и твиками. Если хотите иметь доступ к этим данным из приложения «Файлы», верните обратно."
+          }
         }
       }
     },
@@ -1160,6 +1568,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "模块文件夹"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Папка с твиками приложения"
           }
         }
       }
@@ -1178,6 +1592,12 @@
             "state" : "translated",
             "value" : "修复文件导入和本地通知"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Исправить выбор файлов в приложении и локальные уведомления"
+          }
         }
       }
     },
@@ -1194,6 +1614,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "通过使用LiveContainer的包名解决上述问题。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Исправляет проблемы с используя идентификатор LiveContainer когда перезаписывается установленное приложение."
           }
         }
       }
@@ -1212,6 +1638,12 @@
             "state" : "translated",
             "value" : "自动"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Автоматически"
+          }
         }
       }
     },
@@ -1228,6 +1660,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "取消"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отменить"
           }
         }
       }
@@ -1246,6 +1684,12 @@
             "state" : "translated",
             "value" : "容器"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Контейнеры"
+          }
         }
       }
     },
@@ -1262,6 +1706,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "复制"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скопировать"
           }
         }
       }
@@ -1280,6 +1730,12 @@
             "state" : "translated",
             "value" : "数据"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Данные"
+          }
         }
       }
     },
@@ -1296,6 +1752,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "删除"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить"
           }
         }
       }
@@ -1314,6 +1776,12 @@
             "state" : "translated",
             "value" : "禁用"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отключено"
+          }
         }
       }
     },
@@ -1330,6 +1798,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "完成"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Готово"
           }
         }
       }
@@ -1348,6 +1822,12 @@
             "state" : "translated",
             "value" : "输入新文件夹的名称"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите название для новой папки"
+          }
         }
       }
     },
@@ -1364,6 +1844,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "输入新名称"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите новое название"
           }
         }
       }
@@ -1382,6 +1868,12 @@
             "state" : "translated",
             "value" : "错误"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка"
+          }
         }
       }
     },
@@ -1398,6 +1890,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "语言"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Язык приложения"
           }
         }
       }
@@ -1416,6 +1914,12 @@
             "state" : "translated",
             "value" : "加载中…"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузка"
+          }
         }
       }
     },
@@ -1432,6 +1936,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "杂项"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разное"
           }
         }
       }
@@ -1450,6 +1960,12 @@
             "state" : "translated",
             "value" : "移动"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переместить"
+          }
         }
       }
     },
@@ -1466,6 +1982,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "否"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет"
           }
         }
       }
@@ -1484,6 +2006,12 @@
             "state" : "translated",
             "value" : "无"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отсутствует"
+          }
         }
       }
     },
@@ -1500,6 +2028,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "好"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
           }
         }
       }
@@ -1518,6 +2052,12 @@
             "state" : "translated",
             "value" : "重命名"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переименовать"
+          }
         }
       }
     },
@@ -1534,6 +2074,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "成功"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Успех"
           }
         }
       }
@@ -1552,6 +2098,12 @@
             "state" : "translated",
             "value" : "未知"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неизвестно"
+          }
         }
       }
     },
@@ -1568,6 +2120,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "是"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Да"
           }
         }
       }
@@ -1586,6 +2144,12 @@
             "state" : "translated",
             "value" : "该容器为默认容器"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это контейнер по умолчанию"
+          }
         }
       }
     },
@@ -1602,6 +2166,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "容器文件夹名"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Название папки контейнера"
           }
         }
       }
@@ -1620,6 +2190,12 @@
             "state" : "translated",
             "value" : "容器名称"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Название контейнера"
+          }
         }
       }
     },
@@ -1636,6 +2212,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "当没有指定容器时，LiveContainer会使用默认容器。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LiveContainer будет использовать контейнер по умолчанию, если не выбран иной."
           }
         }
       }
@@ -1654,6 +2236,12 @@
             "state" : "translated",
             "value" : "删除数据"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить данные"
+          }
         }
       }
     },
@@ -1670,6 +2258,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你确定要删除该容器的所有数据吗？"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы хотите удалить все данные этого контейнера?"
           }
         }
       }
@@ -1688,6 +2282,12 @@
             "state" : "translated",
             "value" : "容器当前正在使用"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Контейнер уже используется"
+          }
         }
       }
     },
@@ -1704,6 +2304,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "容器当前正在被%@使用。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Контейнер уже используется %@."
           }
         }
       }
@@ -1722,6 +2328,12 @@
             "state" : "translated",
             "value" : "独立AppGroup"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изолировать группу приложений"
+          }
         }
       }
     },
@@ -1738,6 +2350,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法分配空闲的钥匙串访问组。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Больше нет свободной группы доступа к связкам ключей."
           }
         }
       }
@@ -1756,6 +2374,12 @@
             "state" : "translated",
             "value" : "容器设置"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки контейнера"
+          }
         }
       }
     },
@@ -1772,6 +2396,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "删除容器"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить контейнер"
           }
         }
       }
@@ -1790,6 +2420,12 @@
             "state" : "translated",
             "value" : "你确定要删除此容器吗？"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы хотите удалить этот контейнер?"
+          }
         }
       }
     },
@@ -1806,6 +2442,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你确定要清除该容器的钥匙串吗？"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы хотите удалить связку ключей для этого приложения?"
           }
         }
       }
@@ -1824,6 +2466,12 @@
             "state" : "translated",
             "value" : "选择未使用的容器"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать непривязанный контейнер"
+          }
         }
       }
     },
@@ -1840,6 +2488,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无未使用的数据文件夹。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Непривязанные контейнеры не найдены."
           }
         }
       }
@@ -1858,6 +2512,12 @@
             "state" : "translated",
             "value" : "未知App"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неизвестное приложение"
+          }
         }
       }
     },
@@ -1874,6 +2534,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "设置为默认容器"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Установить как контейнер по умолчанию"
           }
         }
       }
@@ -1892,6 +2558,12 @@
             "state" : "translated",
             "value" : "不能添加超过3个容器。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нельзя добавить больше 3-х контейнеров."
+          }
         }
       }
     },
@@ -1908,6 +2580,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "与App解绑"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отвязать от приложения"
           }
         }
       }
@@ -1926,6 +2604,12 @@
             "state" : "translated",
             "value" : "切换到%@将终止当前App，要继续吗？"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы хотите переключиться на %@? Действие закроет текущее приложение."
+          }
         }
       }
     },
@@ -1942,6 +2626,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未找到App %@。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приложение %@ не найдено."
           }
         }
       }
@@ -1960,6 +2650,12 @@
             "state" : "translated",
             "value" : "在当前App打开"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текущее приложение"
+          }
         }
       }
     },
@@ -1976,6 +2672,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在LiveContainer2中打开"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть во втором LiveContainer"
           }
         }
       }
@@ -1994,6 +2696,12 @@
             "state" : "translated",
             "value" : "打开网页并打开App需要先终止当前App，要继续吗？若App支持，你也可以在当前App内打开。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы хотите открыть веб-страницу и запустить приложение? Действие закроет приложение. Вы можете попробовать открыть в текущем приложении, если оно поддерживает универсальные ссылки."
+          }
         }
       }
     },
@@ -2010,6 +2718,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在设置中配置免JIT模式(打补丁)来使得LiveContainer无需JIT权限即可使用。\n\n**如果配置免JIT模式时遇到问题，请查看免JIT模式诊断页面。**\n\n点击加号按钮来安装App。\n\n长按App可查看App设置，修复App问题，以及将App添加到主屏幕。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройте JIT-less режим в настройках для использования LiveContainer без JIT (Just-In-Time компиляция).\n\n**Проверьте страницу диагностики JIT-less если возникают проблемы.**\n\nНажмите кнопку «+» для установки приложения.\n\nУдерживайте установленное приложение для изменения его настроек, применения исправлений, добавления на экран «Домой»."
           }
         }
       }
@@ -2028,6 +2742,12 @@
             "state" : "translated",
             "value" : "**遇到问题时请先查看[LiveContainer常见问题（英语）](https://github.com/khanhduytran0/LiveContainer/issues/265)。**\n                         \n如果你遇到Bug或者App兼容性问题，请到[GitHub issues](https://github.com/khanhduytran0/LiveContainer/issues)提交。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Перейдите по ссылке [LiveContainer FAQ](https://github.com/khanhduytran0/LiveContainer/issues/265) для решения распространенных проблем.**\n                         \nЕсли столкнетесь с неизвестной проблемой или проблемой совместимости приложения с LiveContainer, заведите новую тему в репозитории проекта [GitHub issues](https://github.com/khanhduytran0/LiveContainer/issues)."
+          }
         }
       }
     },
@@ -2044,6 +2764,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "LiveContainer帮助"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Справка по LiveContainer"
           }
         }
       }
@@ -2062,6 +2788,12 @@
             "state" : "translated",
             "value" : "App Group可访问"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Доступность групп приложений"
+          }
         }
       }
     },
@@ -2078,6 +2810,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "App Group名"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Идентификатор группы приложений"
           }
         }
       }
@@ -2096,6 +2834,12 @@
             "state" : "translated",
             "value" : "包名"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Идентификатор установленного приложения"
+          }
         }
       }
     },
@@ -2112,6 +2856,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "检测到证书数据"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сертификат обнаружен"
           }
         }
       }
@@ -2130,6 +2880,12 @@
             "state" : "translated",
             "value" : "证书上次更新时间"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дата обновления сертификата"
+          }
         }
       }
     },
@@ -2146,6 +2902,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "检测到证书密码"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пароль сертификата обнаружен"
           }
         }
       }
@@ -2164,6 +2926,12 @@
             "state" : "translated",
             "value" : "获取帮助"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поддержка"
+          }
         }
       }
     },
@@ -2180,6 +2948,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "检测到补丁"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приложение магазина приложений настроено для LiveContainer"
           }
         }
       }
@@ -2198,6 +2972,12 @@
             "state" : "translated",
             "value" : "安装方式"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Магазин приложений"
+          }
         }
       }
     },
@@ -2214,6 +2994,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无获取到证书信息，请在SideStore/AltStore刷新后再试。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сертификат необнаружен. Обновите подпись LiveContainer в магазине приложений и попробуйте снова."
           }
         }
       }
@@ -2232,6 +3018,12 @@
             "state" : "translated",
             "value" : "无获取到证书密码。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пароль сертификата не обнаружен"
+          }
         }
       }
     },
@@ -2248,6 +3040,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "执行签名测试时出现问题。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка во время тестирования подписывания приложений"
           }
         }
       }
@@ -2266,6 +3064,12 @@
             "state" : "translated",
             "value" : "无法加载测试动态链接库，这可能是由于证书出现问题。请尝试：1. 重新打开%@；2. 刷新%@；3. 如果仍有问题，请尝试重新给%@打补丁。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тестовая библиотека не загружена. Проверьте сертификат. Попробуйте следующее: 1. Снова откройте %@; 2. Переподпишите приложения в %@; 3. Примените патч к магазину приложений %@ еще раз и попробуйте снова."
+          }
         }
       }
     },
@@ -2282,6 +3086,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "免JIT模式测试通过。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Режим JIT-less работает"
           }
         }
       }
@@ -2300,6 +3110,12 @@
             "state" : "translated",
             "value" : "LiveContainer免JIT模式配置"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройка JIT-less режима LiveContainer"
+          }
         }
       }
     },
@@ -2316,6 +3132,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "关于"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обо мне"
           }
         }
       }
@@ -2334,6 +3156,12 @@
             "state" : "translated",
             "value" : "移动完成。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перенос прошел успешно."
+          }
         }
       }
     },
@@ -2350,6 +3178,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "共享的AppGroup文件夹中不为空。将其中文件移动出来后再试。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Здесь находятся файлы группы общих приложений. Сначала переместите их и попробуйте снова."
           }
         }
       }
@@ -2368,6 +3202,12 @@
             "state" : "translated",
             "value" : "私有的AppGroup文件夹中不为空。将其中文件移动出来后再试。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Здесь находятся файлы группы приложений для одного LiveContainer. Сначала переместите их и попробуйте снова."
+          }
         }
       }
     },
@@ -2384,6 +3224,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "移动私有AppGroup文件到共享文件夹"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переместить группу приложений для одного LiveContainer в папку приложений для нескольких LiveContainer"
           }
         }
       }
@@ -2402,6 +3248,12 @@
             "state" : "translated",
             "value" : "移动共享AppGroup文件到私有文件夹"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переместить группу приложений для нескольких LiveContainer в папку приложений для одного LiveContainer"
+          }
         }
       }
     },
@@ -2418,6 +3270,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "清理未使用的数据文件夹"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Очистить неиспользуемые папки с данными (непривязанные к приложениям)"
           }
         }
       }
@@ -2460,6 +3318,24 @@
               }
             }
           }
+        },
+        "ru" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Вы хотите удалить %lld неиспользуемую папку с данными?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Вы хотите удалить %lld неиспользуемых папок с данными?"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2476,6 +3352,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "清理钥匙串"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Очистить связку ключей"
           }
         }
       }
@@ -2494,6 +3376,12 @@
             "state" : "translated",
             "value" : "某些App的账户不能在LiveContainer间同步的原因可能是其Keychain还存储在本地。清理Keychain可能能解决此问题，但可能会导致你登出某些账户。要继续吗？"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если аккаунты некоторых ваши приложений не синхронизированы между экземплярами LiveContainer, то они будут сохранены в связке ключей текущего LiveContainer. Очистка связки ключей может исправитьпроблему, но может вызвать выход из аккаунтов. Продолжить?"
+          }
         }
       }
     },
@@ -2510,6 +3398,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "默认签名工具"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Метод подписи приложения"
           }
         }
       }
@@ -2528,6 +3422,12 @@
             "state" : "translated",
             "value" : "动态颜色"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Динамические цвета"
+          }
         }
       }
     },
@@ -2544,6 +3444,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "App横幅的颜色随图标动态变化"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включить перекраску цвета в списке на экране «Приложения» в зависимости от цвета иконки приложения"
           }
         }
       }
@@ -2562,6 +3468,12 @@
             "state" : "translated",
             "value" : "在设测试JIT模式前，你必须要先给%@打补丁。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы должны пропатчить %@ перед тестированием режима JIT-less"
+          }
         }
       }
     },
@@ -2578,6 +3490,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在App图标外加边框"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Замещать иконку приложения"
           }
         }
       }
@@ -2596,6 +3514,12 @@
             "state" : "translated",
             "value" : "在App图标外加LiveContainer图标边框。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Замещает стандартную иконку LiveContainer иконкой запущеного приложения"
+          }
         }
       }
     },
@@ -2612,6 +3536,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "向LiveContainer加载模块"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузка твиков в LiveContainer"
           }
         }
       }
@@ -2630,6 +3560,12 @@
             "state" : "translated",
             "value" : "启用后，LiveContainer自身会加载全局模块文件夹中的模块。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавьте ваши твики в глобальную папку «Твики» и LiveContainer применит их при запуске приложения"
+          }
         }
       }
     },
@@ -2646,6 +3582,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "外观"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Интерфейс"
           }
         }
       }
@@ -2664,6 +3606,12 @@
             "state" : "translated",
             "value" : "地址"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Адрес"
+          }
         }
       }
     },
@@ -2680,6 +3628,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "配置SideJITServer/JITStreamer。需要本地网络权限。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройте ваш сервер SideJITServer или JITStreamer. Требуется разрешение на доступ к локальной сети."
           }
         }
       }
@@ -2698,6 +3652,12 @@
             "state" : "translated",
             "value" : "免JIT模式"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Режим JIT-less"
+          }
         }
       }
     },
@@ -2714,6 +3674,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "配置免JIT模式后，LiveContainer无需JIT即可使用。给SideStore或AltStore打补丁后即可使用。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Режим JIT-less позволяет использовать LiveContainer без включенного JIT. Примените патч к магазину приложений чтобы задействовать опцию."
           }
         }
       }
@@ -2732,6 +3698,12 @@
             "state" : "translated",
             "value" : "免JIT模式诊断"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Диагностика режима JIT-less"
+          }
         }
       }
     },
@@ -2745,6 +3717,12 @@
           }
         },
         "zh_CN" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UDID"
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "UDID"
@@ -2850,6 +3828,54 @@
               }
             }
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перемещены %#@arg1@ и %#@arg2@."
+          },
+          "substitutions" : {
+            "arg1" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Папка с данными %arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Папки с данными %arg"
+                    }
+                  }
+                }
+              }
+            },
+            "arg2" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Папка с твиками %arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Папки с твиками %arg"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2866,6 +3892,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "将未使用的文件夹移出AppGroup"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Убрать пустые папки из группы приложений"
           }
         }
       }
@@ -2884,6 +3916,12 @@
             "state" : "translated",
             "value" : "多LiveContainer"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Несколько экземпляров LiveContainer"
+          }
         }
       }
     },
@@ -2900,6 +3938,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "通过安装多个LiveContainer，并将App变为共享App，你可以在这些LiveContainer间共享安装的App及其数据，并同时运行多个App。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Устанавливая несколько экземпляров LiveContainer и конвертируя приложения в общие приложения, вы можете открывать эти приложения во всех копиях LiveContainer со всеми их настройками и данными."
           }
         }
       }
@@ -2918,6 +3962,12 @@
             "state" : "translated",
             "value" : "安装第二个LiveContainer"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Установить еще один LiveContainer"
+          }
         }
       }
     },
@@ -2934,6 +3984,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "这是第二个LiveContainer"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это второй LiveContainer"
           }
         }
       }
@@ -2952,6 +4008,12 @@
             "state" : "translated",
             "value" : "重新安装第二个LiveContainer"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переустановка другого LiveContainer"
+          }
         }
       }
     },
@@ -2968,6 +4030,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未删除任何数据文件夹，所有文件夹都已被使用。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нечего очищать. Все папки с данными используются."
           }
         }
       }
@@ -2986,6 +4054,12 @@
             "state" : "translated",
             "value" : "给%@打补丁"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пропатчить %@"
+          }
         }
       }
     },
@@ -3002,6 +4076,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重新给%@打补丁"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пропатчить %@ снова"
           }
         }
       }
@@ -3020,6 +4100,12 @@
             "state" : "translated",
             "value" : "仅打包"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Только архивировать"
+          }
         }
       }
     },
@@ -3036,6 +4122,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "打包的%@已经保存到LiveContainer的“文件”文件夹，请将其手动安装到安装了LiveContainer的那个%@中。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Магазин приложений с примененным патчем сохранен в рабочей папке LiveContainer. Пожалуйста, установите его с помощью %@, в котором установлен LiveContainer"
           }
         }
       }
@@ -3054,6 +4146,12 @@
             "state" : "translated",
             "value" : "为了通过%@获取证书以配置免JIT模式，你必须要给%@打补丁。%@的功能不会受到任何影响。请确保在打补丁前%@可以正常刷新。要继续吗？"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чтобы использовать режим JIT-less с %@, вы должны применить патч к магазину приложений %@ для получения сертификата магазина. Это не повлияет на работу %@. Пожалуйста, подтвердите, что вы у вас есть возможность переподписать (refresh) %@ перед применением патча. Продолжить?"
+          }
         }
       }
     },
@@ -3070,6 +4168,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "如果你安装了多个SideStore，请选择“仅打包”并手动安装打过补丁的IPA。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если вы используйте несколько копий магазина приложений, выберете «Только архивировать» и установите пропатченное приложение магазина вручную."
           }
         }
       }
@@ -3088,6 +4192,12 @@
             "state" : "translated",
             "value" : "刷新免JIT模式证书"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перевыпустить сертификат для режима JIT-less"
+          }
         }
       }
     },
@@ -3104,6 +4214,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "若ZSign签名遇到问题，可尝试使用AltSign。切换签名工具后请重启LiveContainer。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если ZSign сообщает об ошибке, попробуйте AltSign. После изменения параметра перезапустите LiveContainer"
           }
         }
       }
@@ -3122,6 +4238,12 @@
             "state" : "translated",
             "value" : "仅在证书过期时重新签名"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переподписать только после истечения срока сертификата"
+          }
         }
       }
     },
@@ -3138,6 +4260,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "如果App重新签名过于频繁，可尝试启用此项。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если часто запрашивается переподписание приложения, включите эту опцию"
           }
         }
       }
@@ -3156,6 +4284,12 @@
             "state" : "translated",
             "value" : "总是在当前App打开链接"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Всегда открывать URL в текущем приложении"
+          }
         }
       }
     },
@@ -3172,6 +4306,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "LiveContainer在打开链接时会询问你如何打开。启用此选项来自动在当前App中打开。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "По умолчанию LiveContainer спрашивает вас перед открытием URL. Включая данную опцию, открытие URL происходит сразу в текущем приложении."
           }
         }
       }
@@ -3190,6 +4330,12 @@
             "state" : "translated",
             "value" : "静默切换App"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переключить приложение без предупреждения"
+          }
         }
       }
     },
@@ -3206,6 +4352,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "LiveContainer在切换App时默认会向你确认。启用此选项来静默切换，所有未保存的数将会丢失。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "По умолчанию LiveContainer спрашивает вас перед переключением приложения. Включая данную опцию, переключение происходит сразу. Это может привести к потере данных."
           }
         }
       }
@@ -3224,6 +4376,12 @@
             "state" : "translated",
             "value" : "严格隐藏模式"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Строгий режим скрытия приложений"
+          }
         }
       }
     },
@@ -3240,6 +4398,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "启用后，将只能从App选择界面启动App。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включение данного режима позволит запускать скрытые приложения только после тройного нажания на счетчик установленных приложений."
           }
         }
       }
@@ -3258,6 +4422,12 @@
             "state" : "translated",
             "value" : "测试免JIT模式"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверка режима JIT-less"
+          }
         }
       }
     },
@@ -3274,6 +4444,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "安装方式不受支持。请使用SideStore或AltStore安装来使用此功能。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Метод установки не поддерживается. Используйте AltStore или SideStore для настройки."
           }
         }
       }
@@ -3292,6 +4468,12 @@
             "state" : "translated",
             "value" : "请勿将LiveContainer用于盗版。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пожалуйста, не используйте LiveContainer для запуска нелицензионных приложений."
+          }
         }
       }
     },
@@ -3308,6 +4490,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "App"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приложения"
           }
         }
       }
@@ -3326,6 +4514,12 @@
             "state" : "translated",
             "value" : "设置"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки"
+          }
         }
       }
     },
@@ -3342,6 +4536,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "模块"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Твики"
           }
         }
       }
@@ -3360,6 +4560,12 @@
             "state" : "translated",
             "value" : "这是App专用文件夹。将App的模块文件夹设置为本文件夹，则App在启动时会递归地加载。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это папка с твиками для приложения. Настройте папку с твиками и приложение будет применять их рекурсивно."
+          }
         }
       }
     },
@@ -3376,6 +4582,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "这是全局文件夹，这里的全部模块会被加载到所有App中。要为App单独加载模块，请新建文件夹。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это глобальная папка твиков. Все расположенные здесь твики будут внедрены в приложения. Создайте новую папку, если вы хотите использовать только определенные твики в приложениях."
           }
         }
       }
@@ -3394,6 +4606,12 @@
             "state" : "translated",
             "value" : "导入模块"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Импортировать твик"
+          }
         }
       }
     },
@@ -3410,6 +4628,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新建文件夹"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новая папка"
           }
         }
       }
@@ -3428,6 +4652,12 @@
             "state" : "translated",
             "value" : "%@不是一个文件。"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ не файл."
+          }
         }
       }
     },
@@ -3444,6 +4674,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法打开%@，权限不足。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Невозможно открыть %@, недостаточно прав."
           }
         }
       }
@@ -3462,6 +4698,12 @@
             "state" : "translated",
             "value" : "初始化签名失败"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Произошла ошибка при подписи приложения."
+          }
         }
       }
     },
@@ -3478,6 +4720,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "需要授权。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Требуется аутентификация."
           }
         }
       }
@@ -3496,6 +4744,12 @@
             "state" : "translated",
             "value" : "此页面可以在“%@”中打开，要继续吗？"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эта страница может быть открыта в «%@», продолжить?"
+          }
         }
       }
     },
@@ -3513,6 +4767,12 @@
             "state" : "translated",
             "value" : "此页面想要打开“%@”，要继续吗？"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эта веб-страница пытается запустить «%@», продолжить?"
+          }
         }
       }
     },
@@ -3529,6 +4789,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "启动App"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запустить приложение"
           }
         }
       }
