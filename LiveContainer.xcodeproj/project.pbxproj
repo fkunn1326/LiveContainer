@@ -275,6 +275,7 @@
 				"UIKitPrivate+MultitaskSupport.h",
 				VirtualWindowsHostView.h,
 				VirtualWindowsHostView.m,
+				XToolGuestProcessRegistry.swift,
 			);
 			target = 17413FB42D9C0BAE00F3F928 /* LiveContainerSwiftUI */;
 		};

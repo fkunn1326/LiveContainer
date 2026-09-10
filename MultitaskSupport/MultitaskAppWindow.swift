@@ -119,7 +119,9 @@ struct AppSceneViewSwiftUI: UIViewControllerRepresentable {
     }
     
     func makeUIViewController(context: Context) -> UIViewController {
-        let controller = AppSceneViewController(bundleId: bundleId, dataUUID: dataUUID, delegate: context.coordinator)
+        guard let controller = AppSceneViewController(bundleId: bundleId, dataUUID: dataUUID, delegate: context.coordinator) else {
+            return UIViewController()
+        }
         XToolGuestProcessRegistry.shared.register(controller: controller, dataUUID: dataUUID, bundlePath: bundleId)
         return controller
     }

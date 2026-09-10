@@ -2,6 +2,7 @@ import Foundation
 
 /// Main-actor registry for deterministic guest lifecycle operations. Weak controller
 /// references keep the registry from retaining a disconnected scene.
+@available(iOS 16.1, *)
 @MainActor
 final class XToolGuestProcessRegistry {
     static let shared = XToolGuestProcessRegistry()
@@ -167,7 +168,7 @@ final class XToolGuestProcessRegistry {
 /// This gate is intentionally lock-based because relaunch callbacks can originate on
 /// UIKit or a detached task. It has no references to UI objects.
 final class XToolDevRestartGate {
-    private static var suppressed: [String: Int] = [:]
+    private nonisolated(unsafe) static var suppressed: [String: Int] = [:]
     private static let lock = NSLock()
 
     static func begin(dataUUID: String) {

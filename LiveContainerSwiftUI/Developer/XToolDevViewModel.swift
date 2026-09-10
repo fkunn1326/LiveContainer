@@ -7,7 +7,7 @@ final class XToolDevViewModel: ObservableObject {
     @Published var tokenVisible = false
     @Published var copiedMessage: String?
 
-    init(server: XToolDevServer = XToolDevServer()) { self.server = server }
+    init(server: XToolDevServer? = nil) { self.server = server ?? XToolDevServer() }
 
     var token: String { server.pairingToken ?? "Unavailable" }
 

@@ -178,7 +178,13 @@ enum XToolCrypto {
     }
 
     static func sessionKey(token: Data, clientNonce: Data, serverNonce: Data) -> Data {
-        Data(HKDF<SHA256>.deriveKey(inputKeyMaterial: SymmetricKey(data: token), salt: clientNonce + serverNonce, info: Data("XTLR-SESSION-V1".utf8), outputByteCount: 32))
+        let key = HKDF<SHA256>.deriveKey(
+            inputKeyMaterial: SymmetricKey(data: token),
+            salt: clientNonce + serverNonce,
+            info: Data("XTLR-SESSION-V1".utf8),
+            outputByteCount: 32
+        )
+        return key.withUnsafeBytes { Data($0) }
     }
 
     static func proof(token: Data, clientNonce: Data, serverNonce: Data) -> Data {

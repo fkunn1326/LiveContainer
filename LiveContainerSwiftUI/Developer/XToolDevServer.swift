@@ -32,9 +32,10 @@ final class XToolDevServer: ObservableObject {
     private var activeConnection: XToolDevConnection?
     private var stopRequested = false
 
-    init(port: UInt16 = XToolProtocol.defaultPort, pairingStore: XToolPairingStore = .shared, deploymentService: XToolDeploymentService = .shared) {
+    init(port: UInt16 = XToolProtocol.defaultPort, pairingStore: XToolPairingStore = .shared, deploymentService: XToolDeploymentService? = nil) {
         self.port = port
         self.pairingStore = pairingStore
+        let deploymentService = deploymentService ?? .shared
         self.deploymentService = deploymentService
         self.recoveryRequired = deploymentService.recoveryRequired
     }
@@ -62,7 +63,9 @@ final class XToolDevServer: ObservableObject {
             }
         }
         listener.newConnectionHandler = { [weak self] connection in
-            self?.accept(connection)
+            Task { @MainActor [weak self] in
+                self?.accept(connection)
+            }
         }
         self.listener = listener
         listener.start(queue: queue)
@@ -319,13 +322,13 @@ private final class XToolDevConnection {
             guard frame.kind == .hello, !frame.isAuthenticated else { sendError(code: "unauthorized", message: "HELLO required", requestId: nil, rolledBack: false, closeAfterSend: true); return }
             do {
                 let hello = try frame.decodedMetadata(XToolHello.self)
-                guard let nonce = XToolCrypto.decodeBase64URL(hello.clientNonce), nonce.count == 32 else { throw XToolProtocolError.invalidFrame("invalid client nonce") }
-                clientNonce = nonce
-                let nonce = XToolCrypto.randomBytes(count: 32)
-                serverNonce = nonce
+                guard let decodedClientNonce = XToolCrypto.decodeBase64URL(hello.clientNonce), decodedClientNonce.count == 32 else { throw XToolProtocolError.invalidFrame("invalid client nonce") }
+                clientNonce = decodedClientNonce
+                let generatedServerNonce = XToolCrypto.randomBytes(count: 32)
+                serverNonce = generatedServerNonce
                 handshake = .waitingForAuthentication
                 onClient(hello.clientName + "/" + hello.clientVersion)
-                send(kind: .challenge, metadata: XToolChallenge(runnerVersion: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "dev", serverNonce: XToolCrypto.base64URL(nonce), maxPayloadBytes: XToolProtocol.maximumPayloadLength), authenticated: false)
+                send(kind: .challenge, metadata: XToolChallenge(runnerName: "XTool Runner", runnerVersion: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "dev", serverNonce: XToolCrypto.base64URL(generatedServerNonce), maxPayloadBytes: XToolProtocol.maximumPayloadLength), authenticated: false)
             } catch {
                 sendError(code: "invalid_frame", message: error.localizedDescription, requestId: nil, rolledBack: false, closeAfterSend: true)
             }

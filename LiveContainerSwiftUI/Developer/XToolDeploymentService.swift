@@ -25,11 +25,11 @@ final class XToolDeploymentService {
     private(set) var isDeploying = false
 
     init(
-        installationService: LCAppInstallationService = .shared,
+        installationService: LCAppInstallationService? = nil,
         managedStore: XToolManagedAppStore = XToolManagedAppStore(),
         journalStore: XToolDeploymentJournalStore = XToolDeploymentJournalStore()
     ) {
-        self.installationService = installationService
+        self.installationService = installationService ?? .shared
         self.managedStore = managedStore
         self.journalStore = journalStore
         recoverUnfinishedTransactions()
@@ -41,6 +41,7 @@ final class XToolDeploymentService {
         metadata: XToolDeployMetadata,
         progress: @escaping @MainActor (XToolDeploymentPhase, Double?, String) -> Void
     ) async throws -> XToolDeploymentOutcome {
+        guard #available(iOS 16.1, *) else { throw XToolDeploymentError.unsupportedOS }
         guard !recoveryRequired else { throw XToolDeploymentError.recoveryRequired }
         guard !isDeploying else { throw XToolDeploymentError.swapFailed("another deployment is active") }
         guard metadata.archiveFormat == "ipa", metadata.launchAfterInstall, metadata.preserveDataContainer else {
@@ -189,6 +190,7 @@ final class XToolDeploymentService {
     }
 
     func relaunchManagedApp(bundleIdentifier: String) async throws -> Int32 {
+        guard #available(iOS 16.1, *) else { throw XToolDeploymentError.unsupportedOS }
         guard !recoveryRequired else { throw XToolDeploymentError.recoveryRequired }
         let record = try managedStore.record(for: bundleIdentifier)
         guard let record else { throw XToolDeploymentError.managedAppMissing }
@@ -270,6 +272,7 @@ final class XToolDeploymentService {
         dataUUID: String?,
         progress: @escaping @MainActor (XToolDeploymentPhase, Double?, String) -> Void
     ) async -> Bool {
+        guard #available(iOS 16.1, *) else { return false }
         progress(.rollingBack, nil, "Rolling back to last known good bundle")
         do {
             let shouldStopGuest: Bool
@@ -331,7 +334,7 @@ final class XToolDeploymentService {
     }
 
     private static func isSafeRelativeBundlePath(_ path: String) -> Bool {
-        guard !path.isEmpty, !path.hasPrefix("/"), path.pathExtension == "app" else { return false }
+        guard !path.isEmpty, !path.hasPrefix("/"), URL(fileURLWithPath: path).pathExtension == "app" else { return false }
         let components = path.split(separator: "/")
         guard !components.isEmpty, !components.contains(where: { $0 == "." || $0 == ".." }) else { return false }
         return !components.contains(where: { $0.contains("\\") })

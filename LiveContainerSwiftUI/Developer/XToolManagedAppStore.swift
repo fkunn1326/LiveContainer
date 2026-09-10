@@ -123,6 +123,7 @@ enum XToolDeploymentError: Error, LocalizedError, Sendable {
     case launchTimeout
     case rollbackFailed(String)
     case recoveryRequired
+    case unsupportedOS
 
     var errorDescription: String? {
         switch self {
@@ -148,6 +149,7 @@ enum XToolDeploymentError: Error, LocalizedError, Sendable {
         case .launchTimeout: "Guest launch timed out"
         case .rollbackFailed(let message): "Rollback failed: \(message)"
         case .recoveryRequired: "Runner recovery is required before deployment"
+        case .unsupportedOS: "XTool Runner requires iOS 16.1 or newer"
         }
     }
 
@@ -175,6 +177,7 @@ enum XToolDeploymentError: Error, LocalizedError, Sendable {
         case .launchTimeout: "launch_timeout"
         case .rollbackFailed: "rollback_failed"
         case .recoveryRequired: "recovery_required"
+        case .unsupportedOS: "unsupported_os"
         }
     }
 }

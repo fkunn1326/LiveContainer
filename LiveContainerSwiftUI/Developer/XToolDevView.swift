@@ -10,29 +10,29 @@ struct XToolDevView: View {
     var body: some View {
         Form {
             Section("XTool Runner") {
-                LabeledContent("Server", value: model.server.state.rawValue)
-                LabeledContent("Address", value: "\(localAddress()):\(model.server.port)")
+                valueRow("Server", model.server.state.rawValue)
+                valueRow("Address", "\(localAddress()):\(model.server.port)")
                 Button("Copy Address") {
                     model.copy("\(localAddress()):\(model.server.port)", message: "Address copied")
                 }
                 if let client = model.server.connectedClient {
-                    LabeledContent("Client", value: client)
+                    valueRow("Client", client)
                 }
                 if let name = model.server.managedAppName,
                    let bundleIdentifier = model.server.managedBundleIdentifier {
-                    LabeledContent("Managed App", value: "\(name) (\(bundleIdentifier))")
+                    valueRow("Managed App", "\(name) (\(bundleIdentifier))")
                 }
                 if let buildId = model.server.currentBuildId {
-                    LabeledContent("Build", value: buildId.uuidString)
+                    valueRow("Build", buildId.uuidString)
                 }
                 if let lastSuccess = model.server.lastSuccessfulDeployment {
-                    LabeledContent("Last Success", value: lastSuccess.formatted(date: .abbreviated, time: .standard))
+                    valueRow("Last Success", lastSuccess.formatted(date: .abbreviated, time: .standard))
                 }
                 if let requestId = model.server.currentRequestId {
-                    LabeledContent("Request", value: requestId.uuidString)
+                    valueRow("Request", requestId.uuidString)
                 }
                 if let phase = model.server.currentPhase {
-                    LabeledContent("Phase", value: phase.rawValue)
+                    valueRow("Phase", phase.rawValue)
                 }
                 if let progress = model.server.currentProgress {
                     ProgressView(value: progress)
@@ -80,6 +80,16 @@ struct XToolDevView: View {
     private func maskedToken(_ token: String) -> String {
         guard token.count > 8 else { return "••••••••" }
         return String(token.prefix(4)) + "••••••••" + String(token.suffix(4))
+    }
+
+    private func valueRow(_ label: String, _ value: String) -> some View {
+        HStack {
+            Text(label)
+            Spacer()
+            Text(value)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.trailing)
+        }
     }
 
     private func localAddress() -> String {

@@ -105,7 +105,7 @@ final class LCAppInstallationService {
 
     func installFromIPAForUI(
         at ipaURL: URL,
-        choose: @escaping @MainActor ([LCAppModel], String) async -> LCInstallationChoice?
+        choose: @escaping @MainActor ([LCAppModel], String) async throws -> LCInstallationChoice?
     ) async throws -> LCAppModel {
         let requestId = UUID()
         let stagingRoot = LCPath.bundlePath.appendingPathComponent(".xtool-staging/\(requestId.uuidString)", isDirectory: true)
