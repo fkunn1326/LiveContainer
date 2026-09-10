@@ -20,7 +20,7 @@ static BOOL path_is_unsafe(const char *path) {
 static BOOL symlink_escapes(const char *entryPath, const char *target) {
   if (target == NULL || target[0] == '\0' || target[0] == '/') return YES;
   NSMutableArray<NSString*> *components = [NSMutableArray array];
-  NSString *parent = [[NSString stringWithUTF8String:entryPath ?: @""] stringByDeletingLastPathComponent];
+  NSString *parent = [[NSString stringWithUTF8String:entryPath ?: ""] stringByDeletingLastPathComponent];
   for (NSString *part in [parent pathComponents]) {
     if ([part isEqualToString:@"."] || [part isEqualToString:@"/"] || part.length == 0) continue;
     if ([part isEqualToString:@".."]) {
@@ -126,10 +126,10 @@ copy_data(struct archive *ar, struct archive *aw, NSProgress *progress)
       return (ARCHIVE_OK);
     if (r < ARCHIVE_OK)
       return (r);
-    r = archive_write_data_block(aw, buff, size, offset);
-    if (r < ARCHIVE_OK) {
+    la_ssize_t writeResult = archive_write_data_block(aw, buff, size, offset);
+    if (writeResult < ARCHIVE_OK) {
       fprintf(stderr, "%s\n", archive_error_string(aw));
-      return (r);
+      return (int)writeResult;
     }
     progress.completedUnitCount += size;
   }
