@@ -69,17 +69,20 @@ struct AppSceneViewSwiftUI: UIViewControllerRepresentable {
         }
         
         func appSceneVCAppDidExit(_: AppSceneViewController!) {
-            XToolGuestProcessRegistry.shared.didExit(dataUUID: dataUUID)
-            onExit()
+            Task { @MainActor in
+                XToolGuestProcessRegistry.shared.didExit(dataUUID: dataUUID)
+                onExit()
+            }
         }
         
         func appSceneVC(_ vc: AppSceneViewController!, didInitializeWithError error: (any Error)!) {
-            XToolGuestProcessRegistry.shared.register(controller: vc, dataUUID: dataUUID, bundlePath: vc.bundleId)
-            DispatchQueue.main.async {
+            guard let vc else { return }
+            Task { @MainActor in
+                XToolGuestProcessRegistry.shared.register(controller: vc, dataUUID: dataUUID, bundlePath: vc.bundleId)
                 (vc.view.window?.windowScene?.statusBarManager as? LCStatusBarManager)?.nativeWindowViewController = vc
+                onAppInitialize(vc.pid, error)
+                XToolGuestProcessRegistry.shared.didInitialize(dataUUID: dataUUID, pid: vc.pid, error: error)
             }
-            onAppInitialize(vc.pid, error)
-            XToolGuestProcessRegistry.shared.didInitialize(dataUUID: dataUUID, pid: vc.pid, error: error)
         }
         
         func appSceneVCWillActivateScene(_ vc: AppSceneViewController!) {

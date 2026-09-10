@@ -114,9 +114,14 @@ final class XToolDeploymentService {
             throw error
         }
 
-        if let dataUUID = oldModel?.appInfo.dataUUID {
-            XToolDevRestartGate.begin(dataUUID: dataUUID)
-            defer { XToolDevRestartGate.end(dataUUID: dataUUID) }
+        let restartGateDataUUID = oldModel?.appInfo.dataUUID
+        if let restartGateDataUUID {
+            XToolDevRestartGate.begin(dataUUID: restartGateDataUUID)
+        }
+        defer {
+            if let restartGateDataUUID {
+                XToolDevRestartGate.end(dataUUID: restartGateDataUUID)
+            }
         }
         var replacementModel: LCAppModel?
         var deploymentDataUUID = oldModel?.appInfo.dataUUID

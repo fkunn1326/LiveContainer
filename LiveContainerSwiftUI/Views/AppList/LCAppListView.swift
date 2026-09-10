@@ -607,7 +607,7 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
             return .new(relativeBundlePath: selected.nameOfFolderToInstall)
         }
         installed.delegate = self
-        if let urlSchemes = installed.appInfo.urlSchemes(), !urlSchemes.isEmpty {
+        if let urlSchemes = installed.appInfo.urlSchemes(), urlSchemes.count > 0 {
             UserDefaults.lcShared().mutableArrayValue(forKey: "LCGuestURLSchemes").addObjects(from: urlSchemes as! [Any])
         }
         installProgressPercentage = 1
