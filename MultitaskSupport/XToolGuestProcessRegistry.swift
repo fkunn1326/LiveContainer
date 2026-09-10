@@ -4,8 +4,8 @@ import Foundation
 /// references keep the registry from retaining a disconnected scene.
 @available(iOS 16.1, *)
 @MainActor
-final class XToolGuestProcessRegistry {
-    static let shared = XToolGuestProcessRegistry()
+final class XToolGuestProcessRegistry: NSObject {
+    @objc static let shared = XToolGuestProcessRegistry()
 
     private final class Entry {
         weak var controller: AppSceneViewController?
@@ -14,8 +14,6 @@ final class XToolGuestProcessRegistry {
         var initializedPID: Int32?
         var initializationError: Error?
         var didExit = false
-        var initializationWaiters: [CheckedContinuation<Int32, Error>] = []
-        var exitWaiters: [CheckedContinuation<Void, Error>] = []
 
         init(controller: AppSceneViewController, dataUUID: String, bundlePath: String) {
             self.controller = controller
@@ -30,6 +28,7 @@ final class XToolGuestProcessRegistry {
         entries[dataUUID] != nil
     }
 
+    @objc(registerWithController:dataUUID:bundlePath:)
     func register(controller: AppSceneViewController, dataUUID: String, bundlePath: String) {
         if let entry = entries[dataUUID] {
             if entry.controller !== controller {
@@ -44,69 +43,37 @@ final class XToolGuestProcessRegistry {
     }
 
     func unregister(dataUUID: String) {
-        guard let entry = entries.removeValue(forKey: dataUUID) else { return }
-        entry.initializationWaiters.forEach { $0.resume(throwing: XToolDeploymentError.processNotRegistered) }
-        entry.exitWaiters.forEach { $0.resume(throwing: XToolDeploymentError.processNotRegistered) }
+        entries.removeValue(forKey: dataUUID)
     }
 
+    @objc(didInitializeWithDataUUID:pid:error:)
     func didInitialize(dataUUID: String, pid: Int32, error: Error?) {
         guard let entry = entries[dataUUID] else { return }
         entry.initializedPID = error == nil ? pid : nil
         entry.initializationError = error
-        let waiters = entry.initializationWaiters
-        entry.initializationWaiters.removeAll()
-        if let error {
-            waiters.forEach { $0.resume(throwing: error) }
-        } else {
-            waiters.forEach { $0.resume(returning: pid) }
-        }
     }
 
+    @objc(didExitWithDataUUID:)
     func didExit(dataUUID: String) {
         guard let entry = entries[dataUUID] else { return }
         entry.didExit = true
         entry.initializedPID = nil
-        let waiters = entry.exitWaiters
-        entry.exitWaiters.removeAll()
-        waiters.forEach { $0.resume() }
     }
 
     func waitForInitialization(dataUUID: String, timeoutNanoseconds: UInt64 = 10_000_000_000) async throws -> Int32 {
-        guard let entry = entries[dataUUID] else { throw XToolDeploymentError.processNotRegistered }
-        if entry.didExit { throw XToolDeploymentError.processNotRegistered }
-        if let error = entry.initializationError { throw error }
-        if let pid = entry.initializedPID { return pid }
-        return try await withThrowingTaskGroup(of: Int32.self) { group in
-            group.addTask { [weak self] in
-                try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Int32, Error>) in
-                    Task { @MainActor in
-                        guard let entry = self?.entries[dataUUID] else {
-                            continuation.resume(throwing: XToolDeploymentError.processNotRegistered)
-                            return
-                        }
-                        if let error = entry.initializationError {
-                            continuation.resume(throwing: error)
-                            return
-                        }
-                        if entry.didExit {
-                            continuation.resume(throwing: XToolDeploymentError.processNotRegistered)
-                            return
-                        }
-                        if let pid = entry.initializedPID {
-                            continuation.resume(returning: pid)
-                            return
-                        }
-                        entry.initializationWaiters.append(continuation)
-                    }
-                }
+        let start = DispatchTime.now().uptimeNanoseconds
+        while true {
+            try Task.checkCancellation()
+            if let entry = entries[dataUUID] {
+                if let error = entry.initializationError { throw error }
+                if entry.didExit { throw XToolDeploymentError.processNotRegistered }
+                if let pid = entry.initializedPID { return pid }
             }
-            group.addTask {
-                try await Task.sleep(nanoseconds: timeoutNanoseconds)
+            if DispatchTime.now().uptimeNanoseconds - start >= timeoutNanoseconds {
                 throw XToolDeploymentError.launchTimeout
             }
-            let result = try await group.next()!
-            group.cancelAll()
-            return result
+            // Scene creation and registration can complete after the launch request.
+            try await Task.sleep(nanoseconds: 50_000_000)
         }
     }
 
@@ -126,28 +93,12 @@ final class XToolGuestProcessRegistry {
             throw XToolDeploymentError.processNotRegistered
         }
         controller.terminate()
-        try await withThrowingTaskGroup(of: Void.self) { group in
-            group.addTask { [weak self] in
-                try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-                    Task { @MainActor in
-                        guard let entry = self?.entries[dataUUID] else {
-                            continuation.resume(throwing: XToolDeploymentError.processNotRegistered)
-                            return
-                        }
-                        if entry.didExit {
-                            continuation.resume()
-                            return
-                        }
-                        entry.exitWaiters.append(continuation)
-                    }
-                }
-            }
-            group.addTask {
-                try await Task.sleep(nanoseconds: timeoutNanoseconds)
+        let start = DispatchTime.now().uptimeNanoseconds
+        while !entry.didExit {
+            if DispatchTime.now().uptimeNanoseconds - start >= timeoutNanoseconds {
                 throw XToolDeploymentError.terminateTimeout
             }
-            _ = try await group.next()!
-            group.cancelAll()
+            try await Task.sleep(nanoseconds: 50_000_000)
         }
         try await waitForContainerRelease(dataUUID: dataUUID, timeoutNanoseconds: timeoutNanoseconds)
         MultitaskWindowManager.removeAppWindow(dataUUID: dataUUID)
@@ -167,7 +118,7 @@ final class XToolGuestProcessRegistry {
 
 /// This gate is intentionally lock-based because relaunch callbacks can originate on
 /// UIKit or a detached task. It has no references to UI objects.
-final class XToolDevRestartGate {
+final class XToolDevRestartGate: NSObject {
     private nonisolated(unsafe) static var suppressed: [String: Int] = [:]
     private static let lock = NSLock()
 
@@ -183,6 +134,7 @@ final class XToolDevRestartGate {
         else { suppressed[dataUUID] = count - 1 }
     }
 
+    @objc(isSuppressedWithDataUUID:)
     static func isSuppressed(dataUUID: String) -> Bool {
         lock.lock(); defer { lock.unlock() }
         return suppressed[dataUUID] != nil

@@ -157,11 +157,15 @@ final class XToolDeploymentService {
             }()
             deploymentDataUUID = dataUUID
             progress(.launching, nil, "Launching guest")
-            if oldModel == nil {
-                try await newModel.runApp(multitask: true)
-                dataUUID = newModel.appInfo.dataUUID ?? dataUUID
-            } else {
-                try await newModel.runApp(multitask: true, containerFolderName: dataUUID)
+            do {
+                // runApp can create a new container before launch succeeds or throws.
+                defer { deploymentDataUUID = newModel.appInfo.dataUUID ?? dataUUID }
+                if oldModel == nil {
+                    try await newModel.runApp(multitask: true)
+                    dataUUID = newModel.appInfo.dataUUID ?? dataUUID
+                } else {
+                    try await newModel.runApp(multitask: true, containerFolderName: dataUUID)
+                }
             }
             let pid = try await XToolGuestProcessRegistry.shared.waitForInitialization(dataUUID: dataUUID)
 

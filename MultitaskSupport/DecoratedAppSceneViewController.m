@@ -28,6 +28,11 @@
     _scaleRatio = 1.0;
     _isMaximized = [NSUserDefaults.lcUserDefaults boolForKey:@"LCLaunchMultitaskMaximized"];
     _appSceneVC = [[AppSceneViewController alloc] initWithBundleId:bundleId dataUUID:dataUUID delegate:self];
+    if (@available(iOS 16.1, *)) {
+        if (_appSceneVC) {
+            [XToolGuestProcessRegistry.shared registerWithController:_appSceneVC dataUUID:dataUUID bundlePath:bundleId];
+        }
+    }
     self.title = windowName;
     [self setupDecoratedView];
     
@@ -324,8 +329,11 @@
 }
 
 - (void)appSceneVCAppDidExit:(AppSceneViewController*)vc {
+    if (@available(iOS 16.1, *)) {
+        [XToolGuestProcessRegistry.shared didExitWithDataUUID:self.dataUUID];
+    }
     BOOL skipTerminationScreen = [NSUserDefaults.lcSharedDefaults boolForKey:@"LCSkipTerminatedScreen"];
-    BOOL isManual = _isAppTerminationRequested;
+    BOOL isManual = _isAppTerminationRequested || [XToolDevRestartGate isSuppressedWithDataUUID:self.dataUUID];
     if(isManual || skipTerminationScreen) {
         
         MultitaskDockManager *dock = [MultitaskDockManager shared];
@@ -354,7 +362,14 @@
 
 - (void)appSceneVC:(AppSceneViewController*)vc didInitializeWithError:(NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{
+        if (@available(iOS 16.1, *)) {
+            [XToolGuestProcessRegistry.shared registerWithController:vc dataUUID:self.dataUUID bundlePath:vc.bundleId];
+            [XToolGuestProcessRegistry.shared didInitializeWithDataUUID:self.dataUUID pid:vc.pid error:error];
+        }
         if(error) {
+            if (self.pidAvailableHandler) {
+                self.pidAvailableHandler(nil, error);
+            }
             [vc appTerminationCleanUp];
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"lc.common.error".loc message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
             [alert addAction:[UIAlertAction actionWithTitle:@"lc.common.ok".loc style:UIAlertActionStyleCancel handler:nil]];
