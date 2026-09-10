@@ -55,6 +55,8 @@ final class XToolFrameReceiver {
             }
             guard let frame = currentFrame else { break }
             if remainingPayload > 0 {
+                // Return to Network.framework when this read has been consumed.
+                guard !buffer.isEmpty else { break }
                 let count = min(UInt64(buffer.count), remainingPayload)
                 let chunk = Data(buffer.prefix(Int(count)))
                 buffer.removeFirst(Int(count))
@@ -89,8 +91,8 @@ final class XToolFrameReceiver {
         guard buffer.prefix(4) == XToolProtocol.magic else { throw XToolProtocolError.invalidMagic }
         let version = buffer.readBigEndian(UInt16.self, offset: 4)
         guard version == XToolProtocol.version else { throw XToolProtocolError.unsupportedVersion }
-        guard let kind = XToolMessageKind(rawValue: buffer[6]) else { throw XToolProtocolError.invalidFrame("unknown message kind") }
-        let flags = buffer[7]
+        guard let kind = XToolMessageKind(rawValue: buffer[buffer.startIndex + 6]) else { throw XToolProtocolError.invalidFrame("unknown message kind") }
+        let flags = buffer[buffer.startIndex + 7]
         guard flags == 0 else { throw XToolProtocolError.invalidFrame("unknown flags") }
         let sequence = buffer.readBigEndian(UInt64.self, offset: 8)
         let metadataLength = Int(buffer.readBigEndian(UInt32.self, offset: 16))
@@ -100,7 +102,7 @@ final class XToolFrameReceiver {
         guard payloadLength == 0 || kind == .deploy else { throw XToolProtocolError.invalidFrame("only DEPLOY may carry a payload") }
         let prefixLength = XToolProtocol.fixedHeaderLength + metadataLength
         guard buffer.count >= prefixLength else { return }
-        let metadataStart = XToolProtocol.fixedHeaderLength
+        let metadataStart = buffer.startIndex + XToolProtocol.fixedHeaderLength
         let metadataEnd = metadataStart + metadataLength
         let metadata = Data(buffer[metadataStart..<metadataEnd])
         guard (try? JSONSerialization.jsonObject(with: metadata)) != nil else { throw XToolProtocolError.invalidFrame("metadata is not JSON") }
@@ -136,7 +138,8 @@ private extension Data {
 
     func readBigEndian<T: FixedWidthInteger>(_ type: T.Type, offset: Int) -> T {
         var value: T = 0
-        for byte in self[offset..<(offset + MemoryLayout<T>.size)] {
+        let start = startIndex + offset
+        for byte in self[start..<(start + MemoryLayout<T>.size)] {
             value = (value << 8) | T(byte)
         }
         return value
