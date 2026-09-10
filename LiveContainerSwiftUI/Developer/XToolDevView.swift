@@ -93,9 +93,9 @@ struct XToolDevView: View {
     }
 
     private func localAddress() -> String {
-        var result = "127.0.0.1"
+        var candidates: [(priority: Int, address: String)] = []
         var address: UnsafeMutablePointer<ifaddrs>?
-        guard getifaddrs(&address) == 0, let first = address else { return result }
+        guard getifaddrs(&address) == 0, let first = address else { return "127.0.0.1" }
         defer { freeifaddrs(address) }
         var current: UnsafeMutablePointer<ifaddrs>? = first
         while let item = current {
@@ -104,11 +104,26 @@ struct XToolDevView: View {
                 current = item.pointee.ifa_next
                 continue
             }
+            let interface = String(cString: item.pointee.ifa_name)
             var host = [CChar](repeating: 0, count: Int(NI_MAXHOST))
             getnameinfo(sa, socklen_t(sa.pointee.sa_len), &host, socklen_t(host.count), nil, 0, NI_NUMERICHOST)
-            result = String(cString: host)
-            break
+            let priority: Int
+            if interface == "en0" {
+                priority = 0
+            } else if interface.hasPrefix("en") {
+                priority = 1
+            } else if interface.hasPrefix("bridge") {
+                priority = 2
+            } else if interface.hasPrefix("pdp_ip") {
+                priority = 3
+            } else if interface.hasPrefix("utun") {
+                priority = 4
+            } else {
+                priority = 5
+            }
+            candidates.append((priority, String(cString: host)))
+            current = item.pointee.ifa_next
         }
-        return result
+        return candidates.min { $0.priority < $1.priority }?.address ?? "127.0.0.1"
     }
 }
