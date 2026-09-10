@@ -386,6 +386,5 @@ private func protocolErrorCode(_ error: Error) -> String {
     case .metadataTooLarge: return "metadata_too_large"
     case .payloadTooLarge: return "payload_too_large"
     case .checksumMismatch: return "checksum_mismatch"
-    case .unsafeArchiveEntry: return "unsafe_archive_entry"
     }
 }

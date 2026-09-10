@@ -103,7 +103,6 @@ final class XToolDeploymentJournalStore {
 enum XToolDeploymentError: Error, LocalizedError, Sendable {
     case archiveTooLarge
     case invalidArchive(String)
-    case unsafeArchiveEntry
     case missingAppBundle
     case multipleAppBundles
     case missingInfoPlist
@@ -129,7 +128,6 @@ enum XToolDeploymentError: Error, LocalizedError, Sendable {
         switch self {
         case .archiveTooLarge: "IPA exceeds the configured size limit"
         case .invalidArchive(let message): "Invalid IPA: \(message)"
-        case .unsafeArchiveEntry: "IPA contains an unsafe archive entry"
         case .missingAppBundle: "Payload does not contain an app bundle"
         case .multipleAppBundles: "Payload contains multiple app bundles"
         case .missingInfoPlist: "App bundle has no Info.plist"
@@ -157,7 +155,6 @@ enum XToolDeploymentError: Error, LocalizedError, Sendable {
         switch self {
         case .archiveTooLarge: "payload_too_large"
         case .invalidArchive: "invalid_archive"
-        case .unsafeArchiveEntry: "unsafe_archive_entry"
         case .missingAppBundle: "missing_app_bundle"
         case .multipleAppBundles: "multiple_app_bundles"
         case .missingInfoPlist: "missing_info_plist"

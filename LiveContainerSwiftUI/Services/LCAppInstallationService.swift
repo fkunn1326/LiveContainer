@@ -202,13 +202,6 @@ actor XToolArchiveService {
         let fileManager = FileManager.default
         let archiveSize = try UInt64(ipaURL.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0)
         guard archiveSize <= XToolProtocol.maximumPayloadLength else { throw XToolDeploymentError.archiveTooLarge }
-        var validationError: NSString?
-        let validationStatus = validateIPAArchive(ipaURL.path, XToolProtocol.maximumExpandedLength, XToolProtocol.maximumFileCount, &validationError)
-        guard validationStatus == 0 else {
-            if validationStatus == 2 || validationStatus == 3 { throw XToolDeploymentError.unsafeArchiveEntry }
-            if validationStatus == 5 { throw XToolDeploymentError.archiveTooLarge }
-            throw XToolDeploymentError.invalidArchive(validationError as String? ?? "archive validation failed")
-        }
         try fileManager.createDirectory(at: stagingRoot, withIntermediateDirectories: true)
         let extractionProgress = Progress(totalUnitCount: 100)
         guard extract(ipaURL.path, stagingRoot.path, extractionProgress) == 0 else {
@@ -219,10 +212,8 @@ actor XToolArchiveService {
         guard fileManager.fileExists(atPath: payloadRoot.path, isDirectory: &payloadIsDirectory), payloadIsDirectory.boolValue else {
             throw XToolDeploymentError.missingAppBundle
         }
-        let apps = try fileManager.contentsOfDirectory(at: payloadRoot, includingPropertiesForKeys: [.isDirectoryKey, .isSymbolicLinkKey], options: []).filter { url in
-            let values = try? url.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
-            return url.pathExtension == "app" && values?.isDirectory == true && values?.isSymbolicLink != true
-        }
+        let apps = try fileManager.contentsOfDirectory(at: payloadRoot, includingPropertiesForKeys: nil, options: [])
+            .filter { $0.pathExtension == "app" }
         guard !apps.isEmpty else { throw XToolDeploymentError.missingAppBundle }
         guard apps.count == 1, let appURL = apps.first else { throw XToolDeploymentError.multipleAppBundles }
         let infoURL = appURL.appendingPathComponent("Info.plist")

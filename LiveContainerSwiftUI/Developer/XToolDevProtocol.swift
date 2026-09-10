@@ -7,8 +7,6 @@ enum XToolProtocol {
     static let defaultPort: UInt16 = 24_642
     static let maximumMetadataLength = 64 * 1024
     static let maximumPayloadLength: UInt64 = 512 * 1024 * 1024
-    static let maximumExpandedLength: UInt64 = 1_500 * 1024 * 1024
-    static let maximumFileCount: UInt64 = 100_000
 }
 
 enum XToolMessageKind: UInt8 {
@@ -119,7 +117,6 @@ enum XToolProtocolError: Error, LocalizedError {
     case metadataTooLarge
     case payloadTooLarge
     case checksumMismatch
-    case unsafeArchiveEntry
 
     var errorDescription: String? {
         switch self {
@@ -129,7 +126,6 @@ enum XToolProtocolError: Error, LocalizedError {
         case .metadataTooLarge: "Metadata exceeds 64 KiB"
         case .payloadTooLarge: "Payload exceeds 512 MiB"
         case .checksumMismatch: "Payload checksum mismatch"
-        case .unsafeArchiveEntry: "Archive contains an unsafe path"
         }
     }
 }
