@@ -39,20 +39,6 @@ struct XToolDevView: View {
                 }
             }
 
-            Section("Pairing") {
-                HStack {
-                    Text(model.tokenVisible ? model.token : maskedToken(model.token))
-                        .font(.system(.body, design: .monospaced))
-                        .textSelection(.enabled)
-                    Spacer()
-                    Button(model.tokenVisible ? "Hide" : "Show") { model.tokenVisible.toggle() }
-                    Button("Copy") { model.copy(model.token, message: "Token copied") }
-                }
-                Button("Regenerate Token", role: .destructive) {
-                    model.regenerateToken()
-                }
-            }
-
             Section {
                 Button(model.server.state == .stopped ? "Start Server" : "Stop Server") {
                     if model.server.state == .stopped { model.start() } else { model.server.stop() }
@@ -75,11 +61,6 @@ struct XToolDevView: View {
             if let copied = model.copiedMessage { Text(copied).foregroundStyle(.secondary) }
         }
         .navigationTitle("Developer")
-    }
-
-    private func maskedToken(_ token: String) -> String {
-        guard token.count > 8 else { return "••••••••" }
-        return String(token.prefix(4)) + "••••••••" + String(token.suffix(4))
     }
 
     private func valueRow(_ label: String, _ value: String) -> some View {

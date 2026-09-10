@@ -197,10 +197,10 @@ Open Xcode, edit `DEVELOPMENT_TEAM[config=Debug]` in `xcconfigs/Global.xcconfig`
 ## XTool Runner fast restart
 
 The Developer tab contains the opt-in XTool Runner server. Start it explicitly,
-copy the displayed base64url token, and run the host command:
+then run the host command:
 
 ```bash
-xtool dev live --host 192.168.1.50 --token '<token>'
+xtool dev live --host 192.168.1.50
 ```
 
 Use `--once` for one build/deploy. The Runner stages, validates, patches, and
@@ -209,7 +209,7 @@ signs the IPA before stopping the guest. A successful swap keeps the existing
 guest. Managed app records are stored in Application Support and deployment
 journals are retained until a transaction commits.
 
-Protocol v1 does not encrypt the IPA payload.
+The protocol does not encrypt the IPA payload.
 Use only on a trusted local network.
 Do not expose the Runner port to the Internet.
 

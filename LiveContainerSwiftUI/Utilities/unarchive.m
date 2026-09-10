@@ -149,8 +149,12 @@ int extract(NSString* fileToExtract, NSString* extractionPath, NSProgress* progr
     flags |= ARCHIVE_EXTRACT_ACL;
     flags |= ARCHIVE_EXTRACT_FFLAGS;
     flags |= ARCHIVE_EXTRACT_SECURE_NODOTDOT;
-    flags |= ARCHIVE_EXTRACT_SECURE_NOABSOLUTEPATHS;
     flags |= ARCHIVE_EXTRACT_SECURE_SYMLINKS;
+
+    // archive_write_disk receives an absolute destination path below. Do not
+    // use ARCHIVE_EXTRACT_SECURE_NOABSOLUTEPATHS here: that option rejects the
+    // destination path itself, even though the archive entry was validated as
+    // relative and safe above.
 
     // Calculate decompressed size
     a = archive_read_new();
@@ -185,13 +189,16 @@ int extract(NSString* fileToExtract, NSString* extractionPath, NSProgress* progr
     archive_write_disk_set_options(ext, flags);
     archive_write_disk_set_standard_lookup(ext);
 
+    int result = 0;
     while ((r = archive_read_next_header(a, &entry)) != ARCHIVE_EOF) {
         if (r == ARCHIVE_EOF)
             break;
         if (r < ARCHIVE_OK)
             fprintf(stderr, "%s\n", archive_error_string(a));
-        if (r < ARCHIVE_WARN)
+        if (r < ARCHIVE_WARN) {
+            result = 1;
             break;
+        }
         
         NSString* currentFile = [NSString stringWithUTF8String:archive_entry_pathname(entry)];
         NSString* fullOutputPath = [extractionPath stringByAppendingPathComponent:currentFile];
@@ -199,25 +206,30 @@ int extract(NSString* fileToExtract, NSString* extractionPath, NSProgress* progr
         archive_entry_set_pathname(entry, fullOutputPath.fileSystemRepresentation);
         
         r = archive_write_header(ext, entry);
-        if (r < ARCHIVE_OK)
+        if (r < ARCHIVE_OK) {
             fprintf(stderr, "%s\n", archive_error_string(ext));
-        else if (archive_entry_size(entry) > 0) {
+            result = 1;
+            break;
+        }
+        if (archive_entry_size(entry) > 0) {
             r = copy_data(a, ext, progress);
-            if (r < ARCHIVE_OK)
+            if (r < ARCHIVE_OK) {
                 fprintf(stderr, "%s\n", archive_error_string(ext));
-            if (r < ARCHIVE_WARN)
+                result = 1;
                 break;
+            }
         }
         r = archive_write_finish_entry(ext);
-        if (r < ARCHIVE_OK)
+        if (r < ARCHIVE_OK) {
             fprintf(stderr, "%s\n", archive_error_string(ext));
-        if (r < ARCHIVE_WARN)
+            result = 1;
             break;
+        }
     }
     archive_read_close(a);
     archive_read_free(a);
     archive_write_close(ext);
     archive_write_free(ext);
     
-    return 0;
+    return result;
 }

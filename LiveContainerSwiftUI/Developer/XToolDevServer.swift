@@ -12,6 +12,8 @@ enum XToolServerState: String {
 
 @MainActor
 final class XToolDevServer: ObservableObject {
+    static let shared = XToolDevServer()
+
     @Published private(set) var state: XToolServerState = .stopped
     @Published private(set) var lastError: String?
     @Published private(set) var connectedClient: String?
@@ -26,21 +28,17 @@ final class XToolDevServer: ObservableObject {
 
     let port: UInt16
     private let queue = DispatchQueue(label: "org.xtool.XToolRunner.dev-server")
-    private let pairingStore: XToolPairingStore
     private let deploymentService: XToolDeploymentService
     private var listener: NWListener?
     private var activeConnection: XToolDevConnection?
     private var stopRequested = false
 
-    init(port: UInt16 = XToolProtocol.defaultPort, pairingStore: XToolPairingStore = .shared, deploymentService: XToolDeploymentService? = nil) {
+    init(port: UInt16 = XToolProtocol.defaultPort, deploymentService: XToolDeploymentService? = nil) {
         self.port = port
-        self.pairingStore = pairingStore
         let deploymentService = deploymentService ?? .shared
         self.deploymentService = deploymentService
         self.recoveryRequired = deploymentService.recoveryRequired
     }
-
-    var pairingToken: String? { try? pairingStore.displayToken() }
 
     func start() throws {
         guard listener == nil else { return }
@@ -88,19 +86,6 @@ final class XToolDevServer: ObservableObject {
         currentProgress = nil
     }
 
-    func regenerateToken() throws {
-        let deploymentIsActive = state == .deploying
-        if !deploymentIsActive {
-            activeConnection?.cancel()
-            activeConnection = nil
-        } else {
-            stopRequested = true
-        }
-        _ = try pairingStore.regenerate()
-        connectedClient = nil
-        if !deploymentIsActive { state = listener == nil ? .stopped : .listening }
-    }
-
     func retryRecovery() {
         deploymentService.recoverUnfinishedTransactions()
         recoveryRequired = deploymentService.recoveryRequired
@@ -138,7 +123,6 @@ final class XToolDevServer: ObservableObject {
             let connection = XToolDevConnection(
                 connection: nwConnection,
                 temporaryDirectory: temporaryDirectory,
-                tokenProvider: { [weak self] in try self?.pairingStore.tokenData() },
                 onClient: { [weak self] name in
                     Task { @MainActor in
                         self?.connectedClient = name
@@ -156,6 +140,11 @@ final class XToolDevServer: ObservableObject {
                 onDeployment: { [weak self] connection, frame, received in
                     Task { @MainActor in
                         await self?.handleDeployment(connection: connection, frame: frame, received: received)
+                    }
+                },
+                onError: { [weak self] message in
+                    Task { @MainActor in
+                        self?.lastError = message
                     }
                 },
                 onClosed: { [weak self] connection in
@@ -233,34 +222,30 @@ final class XToolDevServer: ObservableObject {
 }
 
 private final class XToolDevConnection {
-    private enum HandshakeState { case waitingForHello, waitingForAuthentication, ready }
+    private enum HandshakeState { case waitingForHello, ready }
 
     let connection: NWConnection
     private let queue = DispatchQueue(label: "org.xtool.XToolRunner.dev-connection")
     private let temporaryDirectory: URL
-    private let tokenProvider: () throws -> Data?
     private let onClient: (String) -> Void
     private let onProgress: (XToolProgressMetadata) -> Void
     private let onDeployment: (XToolDevConnection, XToolFrame, XToolFrameReceiver.ReceivedFrame) -> Void
+    private let onError: (String) -> Void
     private let onClosed: (XToolDevConnection) -> Void
     private var receiver: XToolFrameReceiver
     private var handshake: HandshakeState = .waitingForHello
-    private var clientNonce: Data?
-    private var serverNonce: Data?
-    private var sessionKey: Data?
-    private var nextSequence: UInt64 = 1
     private var isClosed = false
     private var deploymentInProgress = false
     private var lastBuildSequence: UInt64 = 0
     private var requestIDs = Set<UUID>()
 
-    init(connection: NWConnection, temporaryDirectory: URL, tokenProvider: @escaping () throws -> Data?, onClient: @escaping (String) -> Void, onProgress: @escaping (XToolProgressMetadata) -> Void, onDeployment: @escaping (XToolDevConnection, XToolFrame, XToolFrameReceiver.ReceivedFrame) -> Void, onClosed: @escaping (XToolDevConnection) -> Void) {
+    init(connection: NWConnection, temporaryDirectory: URL, onClient: @escaping (String) -> Void, onProgress: @escaping (XToolProgressMetadata) -> Void, onDeployment: @escaping (XToolDevConnection, XToolFrame, XToolFrameReceiver.ReceivedFrame) -> Void, onError: @escaping (String) -> Void, onClosed: @escaping (XToolDevConnection) -> Void) {
         self.connection = connection
         self.temporaryDirectory = temporaryDirectory
-        self.tokenProvider = tokenProvider
         self.onClient = onClient
         self.onProgress = onProgress
         self.onDeployment = onDeployment
+        self.onError = onError
         self.onClosed = onClosed
         self.receiver = XToolFrameReceiver(temporaryDirectory: temporaryDirectory)
     }
@@ -268,7 +253,10 @@ private final class XToolDevConnection {
     func start() {
         connection.stateUpdateHandler = { [weak self] state in
             guard let self else { return }
-            if case .failed = state { self.close() }
+            if case .failed(let error) = state {
+                self.onError("Connection failed: \(error.localizedDescription)")
+                self.close()
+            }
             if case .cancelled = state { self.close() }
         }
         connection.start(queue: queue)
@@ -279,16 +267,16 @@ private final class XToolDevConnection {
 
     func sendProgress(requestId: UUID, phase: XToolDeploymentPhase, fraction: Double?, message: String) {
         let metadata = XToolProgressMetadata(requestId: requestId, phase: phase, fraction: fraction, message: message)
-        send(kind: .progress, metadata: metadata, authenticated: true)
+        send(kind: .progress, metadata: metadata)
         onProgress(metadata)
     }
 
     func sendResult(requestId: UUID, metadata: XToolResultMetadata) {
-        send(kind: .result, metadata: metadata, authenticated: true)
+        send(kind: .result, metadata: metadata)
     }
 
     func sendError(code: String, message: String, requestId: UUID?, rolledBack: Bool, closeAfterSend: Bool = false) {
-        send(kind: .error, metadata: XToolErrorMetadata(requestId: requestId, code: code, message: message, recoverable: true, rolledBack: rolledBack), authenticated: handshake == .ready, allowWhenClosed: closeAfterSend, closeAfterSend: closeAfterSend)
+        send(kind: .error, metadata: XToolErrorMetadata(requestId: requestId, code: code, message: message, recoverable: true, rolledBack: rolledBack), allowWhenClosed: closeAfterSend, closeAfterSend: closeAfterSend)
     }
 
     func finishDeployment() {
@@ -306,11 +294,17 @@ private final class XToolDevConnection {
                 do {
                     for received in try self.receiver.append(data) { self.handle(received) }
                 } catch let frameError {
+                    self.onError("Protocol error: \(frameError.localizedDescription)")
                     self.sendError(code: protocolErrorCode(frameError), message: frameError.localizedDescription, requestId: nil, rolledBack: false, closeAfterSend: true)
                     return
                 }
             }
-            if isComplete || error != nil { self.close() }
+            if let error {
+                self.onError("Receive failed: \(error.localizedDescription)")
+                self.close()
+            } else if isComplete {
+                self.close()
+            }
             else { self.receiveNext() }
         }
     }
@@ -319,35 +313,16 @@ private final class XToolDevConnection {
         let frame = received.frame
         switch handshake {
         case .waitingForHello:
-            guard frame.kind == .hello, !frame.isAuthenticated else { sendError(code: "unauthorized", message: "HELLO required", requestId: nil, rolledBack: false, closeAfterSend: true); return }
+            guard frame.kind == .hello else { sendError(code: "invalid_frame", message: "HELLO required", requestId: nil, rolledBack: false, closeAfterSend: true); return }
             do {
                 let hello = try frame.decodedMetadata(XToolHello.self)
-                guard let decodedClientNonce = XToolCrypto.decodeBase64URL(hello.clientNonce), decodedClientNonce.count == 32 else { throw XToolProtocolError.invalidFrame("invalid client nonce") }
-                clientNonce = decodedClientNonce
-                let generatedServerNonce = XToolCrypto.randomBytes(count: 32)
-                serverNonce = generatedServerNonce
-                handshake = .waitingForAuthentication
+                handshake = .ready
                 onClient(hello.clientName + "/" + hello.clientVersion)
-                send(kind: .challenge, metadata: XToolChallenge(runnerName: "XTool Runner", runnerVersion: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "dev", serverNonce: XToolCrypto.base64URL(generatedServerNonce), maxPayloadBytes: XToolProtocol.maximumPayloadLength), authenticated: false)
+                send(kind: .ready, metadata: XToolReady(sessionId: UUID(), capabilities: ["deploy", "fast-restart"], protocolVersion: XToolProtocol.version))
             } catch {
                 sendError(code: "invalid_frame", message: error.localizedDescription, requestId: nil, rolledBack: false, closeAfterSend: true)
             }
-        case .waitingForAuthentication:
-            guard frame.kind == .authenticate, !frame.isAuthenticated else { sendError(code: "unauthorized", message: "AUTHENTICATE required", requestId: nil, rolledBack: false, closeAfterSend: true); return }
-            do {
-                let auth = try frame.decodedMetadata(XToolAuthenticate.self)
-                guard let token = try tokenProvider(), let clientNonce, let serverNonce, let proof = XToolCrypto.decodeBase64URL(auth.proof), XToolCrypto.constantTimeEqual(proof, XToolCrypto.proof(token: token, clientNonce: clientNonce, serverNonce: serverNonce)) else {
-                    throw XToolProtocolError.unauthorized
-                }
-                sessionKey = XToolCrypto.sessionKey(token: token, clientNonce: clientNonce, serverNonce: serverNonce)
-                receiver.setSessionKey(sessionKey)
-                handshake = .ready
-                send(kind: .ready, metadata: XToolReady(sessionId: UUID(), capabilities: ["deploy", "fast-restart"], protocolVersion: XToolProtocol.version), authenticated: true)
-            } catch {
-                sendError(code: "unauthorized", message: "Authentication failed", requestId: nil, rolledBack: false, closeAfterSend: true)
-            }
         case .ready:
-            guard frame.isAuthenticated else { sendError(code: "unauthorized", message: "Authenticated frame required", requestId: nil, rolledBack: false, closeAfterSend: true); return }
             switch frame.kind {
             case .deploy:
                 guard !deploymentInProgress else { sendError(code: "server_busy", message: "Another deployment is active", requestId: nil, rolledBack: false); return }
@@ -363,24 +338,29 @@ private final class XToolDevConnection {
                 deploymentInProgress = true
                 onDeployment(self, frame, received)
             case .ping:
-                send(kind: .pong, metadata: EmptyMetadata(), authenticated: true)
+                send(kind: .pong, metadata: EmptyMetadata())
             default:
                 break
             }
         }
     }
 
-    private func send<T: Encodable>(kind: XToolMessageKind, metadata: T, authenticated: Bool, allowWhenClosed: Bool = false, closeAfterSend: Bool = false) {
+    private func send<T: Encodable>(kind: XToolMessageKind, metadata: T, allowWhenClosed: Bool = false, closeAfterSend: Bool = false) {
         queue.async { [weak self] in
             guard let self, !self.isClosed || allowWhenClosed else { return }
             do {
-                let frame = try XToolFrame(kind: kind, flags: authenticated ? 1 : 0, sequence: authenticated ? self.nextSequence : 0, metadata: metadata)
-                let bytes = try XToolFrameCodec.encode(frame, sessionKey: self.sessionKey)
-                if authenticated { self.nextSequence += 1 }
-                self.connection.send(content: bytes, completion: .contentProcessed { [weak self] _ in
+                let frame = try XToolFrame(kind: kind, metadata: metadata)
+                let bytes = try XToolFrameCodec.encode(frame)
+                self.connection.send(content: bytes, completion: .contentProcessed { [weak self] error in
+                    if let error {
+                        self?.onError("Send failed: \(error.localizedDescription)")
+                    }
                     if closeAfterSend { self?.close() }
                 })
-            } catch { self.close() }
+            } catch {
+                self.onError("Send failed: \(error.localizedDescription)")
+                self.close()
+            }
         }
     }
 
@@ -405,8 +385,6 @@ private func protocolErrorCode(_ error: Error) -> String {
     case .unsupportedVersion: return "unsupported_protocol"
     case .metadataTooLarge: return "metadata_too_large"
     case .payloadTooLarge: return "payload_too_large"
-    case .unauthorized: return "unauthorized"
-    case .sequenceReplayed: return "sequence_replayed"
     case .checksumMismatch: return "checksum_mismatch"
     case .unsafeArchiveEntry: return "unsafe_archive_entry"
     }

@@ -1,11 +1,9 @@
 import Foundation
-import CryptoKit
 
 enum XToolProtocol {
-    static let version: UInt16 = 1
+    static let version: UInt16 = 2
     static let magic = Data("XTLR".utf8)
     static let fixedHeaderLength = 28
-    static let authenticationCodeLength = 32
     static let defaultPort: UInt16 = 24_642
     static let maximumMetadataLength = 64 * 1024
     static let maximumPayloadLength: UInt64 = 512 * 1024 * 1024
@@ -15,8 +13,6 @@ enum XToolProtocol {
 
 enum XToolMessageKind: UInt8 {
     case hello = 0x01
-    case challenge = 0x02
-    case authenticate = 0x03
     case ready = 0x04
     case deploy = 0x10
     case ping = 0x11
@@ -32,8 +28,6 @@ struct XToolFrame {
     let sequence: UInt64
     let metadata: Data
     let payload: Data
-
-    var isAuthenticated: Bool { flags & 1 == 1 }
 
     init(kind: XToolMessageKind, flags: UInt8 = 0, sequence: UInt64 = 0, metadata: Data = Data(), payload: Data = Data()) {
         self.kind = kind
@@ -57,18 +51,6 @@ struct XToolFrame {
 struct XToolHello: Codable {
     let clientName: String
     let clientVersion: String
-    let clientNonce: String
-}
-
-struct XToolChallenge: Codable {
-    let runnerName: String
-    let runnerVersion: String
-    let serverNonce: String
-    let maxPayloadBytes: UInt64
-}
-
-struct XToolAuthenticate: Codable {
-    let proof: String
 }
 
 struct XToolReady: Codable {
@@ -136,8 +118,6 @@ enum XToolProtocolError: Error, LocalizedError {
     case invalidFrame(String)
     case metadataTooLarge
     case payloadTooLarge
-    case unauthorized
-    case sequenceReplayed
     case checksumMismatch
     case unsafeArchiveEntry
 
@@ -148,64 +128,13 @@ enum XToolProtocolError: Error, LocalizedError {
         case .invalidFrame(let message): "Invalid XTLR frame: \(message)"
         case .metadataTooLarge: "Metadata exceeds 64 KiB"
         case .payloadTooLarge: "Payload exceeds 512 MiB"
-        case .unauthorized: "Runner authentication failed"
-        case .sequenceReplayed: "Frame sequence number was replayed"
         case .checksumMismatch: "Payload checksum mismatch"
         case .unsafeArchiveEntry: "Archive contains an unsafe path"
         }
     }
 }
 
-enum XToolCrypto {
-    static func randomBytes(count: Int) -> Data {
-        var data = Data(count: count)
-        for index in 0..<count { data[index] = UInt8.random(in: .min ... .max) }
-        return data
-    }
-
-    static func base64URL(_ data: Data) -> String {
-        data.base64EncodedString().replacingOccurrences(of: "+", with: "-").replacingOccurrences(of: "/", with: "_").replacingOccurrences(of: "=", with: "")
-    }
-
-    static func decodeBase64URL(_ value: String) -> Data? {
-        var value = value.replacingOccurrences(of: "-", with: "+").replacingOccurrences(of: "_", with: "/")
-        value += String(repeating: "=", count: (4 - value.count % 4) % 4)
-        return Data(base64Encoded: value)
-    }
-
-    static func hmac(key: Data, data: Data) -> Data {
-        Data(HMAC<SHA256>.authenticationCode(for: data, using: SymmetricKey(data: key)))
-    }
-
-    static func sessionKey(token: Data, clientNonce: Data, serverNonce: Data) -> Data {
-        let key = HKDF<SHA256>.deriveKey(
-            inputKeyMaterial: SymmetricKey(data: token),
-            salt: clientNonce + serverNonce,
-            info: Data("XTLR-SESSION-V1".utf8),
-            outputByteCount: 32
-        )
-        return key.withUnsafeBytes { Data($0) }
-    }
-
-    static func proof(token: Data, clientNonce: Data, serverNonce: Data) -> Data {
-        hmac(key: token, data: Data("XTLR-AUTH-V1".utf8) + clientNonce + serverNonce)
-    }
-
-    static func constantTimeEqual(_ lhs: Data, _ rhs: Data) -> Bool {
-        guard lhs.count == rhs.count else { return false }
-        var result: UInt8 = 0
-        for (a, b) in zip(lhs, rhs) { result |= a ^ b }
-        return result == 0
-    }
-}
-
 private extension Data {
-    static func + (lhs: Data, rhs: Data) -> Data {
-        var value = lhs
-        value.append(rhs)
-        return value
-    }
-
     mutating func appendBigEndian<T: FixedWidthInteger>(_ value: T) {
         var value = value.bigEndian
         Swift.withUnsafeBytes(of: &value) { append(contentsOf: $0) }

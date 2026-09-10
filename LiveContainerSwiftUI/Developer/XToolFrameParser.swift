@@ -2,11 +2,10 @@ import Foundation
 import CryptoKit
 
 enum XToolFrameCodec {
-    static func prefix(for frame: XToolFrame, payloadLength: UInt64, sessionKey: Data? = nil) throws -> Data {
+    static func prefix(for frame: XToolFrame, payloadLength: UInt64) throws -> Data {
         guard frame.metadata.count <= XToolProtocol.maximumMetadataLength else { throw XToolProtocolError.metadataTooLarge }
         guard payloadLength <= XToolProtocol.maximumPayloadLength else { throw XToolProtocolError.payloadTooLarge }
-        guard payloadLength == 0 || frame.isAuthenticated else { throw XToolProtocolError.unauthorized }
-        guard frame.flags & ~UInt8(1) == 0 else { throw XToolProtocolError.invalidFrame("unknown flags") }
+        guard frame.flags == 0 else { throw XToolProtocolError.invalidFrame("unknown flags") }
         guard (try? JSONSerialization.jsonObject(with: frame.metadata)) != nil else { throw XToolProtocolError.invalidFrame("metadata is not JSON") }
         var header = XToolProtocol.magic
         header.appendBigEndian(XToolProtocol.version)
@@ -17,15 +16,11 @@ enum XToolFrameCodec {
         header.appendBigEndian(payloadLength)
         var result = header
         result.append(frame.metadata)
-        if frame.isAuthenticated {
-            guard let sessionKey else { throw XToolProtocolError.unauthorized }
-            result.append(XToolCrypto.hmac(key: sessionKey, data: header + frame.metadata))
-        }
         return result
     }
 
-    static func encode(_ frame: XToolFrame, sessionKey: Data? = nil) throws -> Data {
-        var result = try prefix(for: frame, payloadLength: UInt64(frame.payload.count), sessionKey: sessionKey)
+    static func encode(_ frame: XToolFrame) throws -> Data {
+        var result = try prefix(for: frame, payloadLength: UInt64(frame.payload.count))
         result.append(frame.payload)
         return result
     }
@@ -41,8 +36,6 @@ final class XToolFrameReceiver {
     }
 
     private var buffer = Data()
-    private var sessionKey: Data?
-    private var lastAuthenticatedSequence: UInt64 = 0
     private let temporaryDirectory: URL
     private var payloadHandle: FileHandle?
     private var payloadHasher: SHA256?
@@ -51,11 +44,6 @@ final class XToolFrameReceiver {
     private var payloadURL: URL?
 
     init(temporaryDirectory: URL) { self.temporaryDirectory = temporaryDirectory }
-
-    func setSessionKey(_ key: Data?) {
-        sessionKey = key
-        lastAuthenticatedSequence = 0
-    }
 
     func append(_ data: Data) throws -> [ReceivedFrame] {
         buffer.append(data)
@@ -103,18 +91,15 @@ final class XToolFrameReceiver {
         guard version == XToolProtocol.version else { throw XToolProtocolError.unsupportedVersion }
         guard let kind = XToolMessageKind(rawValue: buffer[6]) else { throw XToolProtocolError.invalidFrame("unknown message kind") }
         let flags = buffer[7]
-        guard flags & ~UInt8(1) == 0 else { throw XToolProtocolError.invalidFrame("unknown flags") }
+        guard flags == 0 else { throw XToolProtocolError.invalidFrame("unknown flags") }
         let sequence = buffer.readBigEndian(UInt64.self, offset: 8)
         let metadataLength = Int(buffer.readBigEndian(UInt32.self, offset: 16))
         let payloadLength = buffer.readBigEndian(UInt64.self, offset: 20)
         guard metadataLength <= XToolProtocol.maximumMetadataLength else { throw XToolProtocolError.metadataTooLarge }
         guard payloadLength <= XToolProtocol.maximumPayloadLength else { throw XToolProtocolError.payloadTooLarge }
-        guard payloadLength == 0 || flags & 1 == 1 else { throw XToolProtocolError.unauthorized }
         guard payloadLength == 0 || kind == .deploy else { throw XToolProtocolError.invalidFrame("only DEPLOY may carry a payload") }
-        let authLength = flags & 1 == 1 ? XToolProtocol.authenticationCodeLength : 0
-        let prefixLength = XToolProtocol.fixedHeaderLength + metadataLength + authLength
+        let prefixLength = XToolProtocol.fixedHeaderLength + metadataLength
         guard buffer.count >= prefixLength else { return }
-        let header = Data(buffer.prefix(XToolProtocol.fixedHeaderLength))
         let metadataStart = XToolProtocol.fixedHeaderLength
         let metadataEnd = metadataStart + metadataLength
         let metadata = Data(buffer[metadataStart..<metadataEnd])
@@ -127,16 +112,6 @@ final class XToolFrameReceiver {
                   !deploy.bundleIdentifier.isEmpty else {
                 throw XToolProtocolError.invalidFrame("DEPLOY metadata is invalid")
             }
-        }
-        if flags & 1 == 1 {
-            guard let sessionKey else { throw XToolProtocolError.unauthorized }
-            let codeStart = metadataEnd
-            let codeEnd = codeStart + XToolProtocol.authenticationCodeLength
-            let actual = Data(buffer[codeStart..<codeEnd])
-            let expected = XToolCrypto.hmac(key: sessionKey, data: header + metadata)
-            guard XToolCrypto.constantTimeEqual(actual, expected) else { throw XToolProtocolError.unauthorized }
-            guard sequence > lastAuthenticatedSequence else { throw XToolProtocolError.sequenceReplayed }
-            lastAuthenticatedSequence = sequence
         }
         buffer.removeFirst(prefixLength)
         let frame = XToolFrame(kind: kind, flags: flags, sequence: sequence, metadata: metadata)
@@ -154,12 +129,6 @@ final class XToolFrameReceiver {
 }
 
 private extension Data {
-    static func + (lhs: Data, rhs: Data) -> Data {
-        var value = lhs
-        value.append(rhs)
-        return value
-    }
-
     mutating func appendBigEndian<T: FixedWidthInteger>(_ value: T) {
         var value = value.bigEndian
         Swift.withUnsafeBytes(of: &value) { append(contentsOf: $0) }

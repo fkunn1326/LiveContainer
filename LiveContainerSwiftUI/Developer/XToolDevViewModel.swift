@@ -5,12 +5,11 @@ import Combine
 @MainActor
 final class XToolDevViewModel: ObservableObject {
     let server: XToolDevServer
-    @Published var tokenVisible = false
     @Published var copiedMessage: String?
     private var serverObservation: AnyCancellable?
 
     init(server: XToolDevServer? = nil) {
-        let server = server ?? XToolDevServer()
+        let server = server ?? XToolDevServer.shared
         self.server = server
         serverObservation = server.objectWillChange
             .receive(on: DispatchQueue.main)
@@ -18,8 +17,6 @@ final class XToolDevViewModel: ObservableObject {
                 self?.objectWillChange.send()
             }
     }
-
-    var token: String { server.pairingToken ?? "Unavailable" }
 
     func copy(_ value: String, message: String) {
         UIPasteboard.general.string = value
@@ -33,15 +30,6 @@ final class XToolDevViewModel: ObservableObject {
     func start() {
         do { try server.start() }
         catch { server.report(error: error) }
-    }
-
-    func regenerateToken() {
-        do {
-            _ = try server.regenerateToken()
-            tokenVisible = false
-        } catch {
-            server.report(error: error)
-        }
     }
 
     func relaunchManagedApp() {
