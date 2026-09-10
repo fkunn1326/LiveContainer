@@ -1,13 +1,23 @@
 import Foundation
 import SwiftUI
+import Combine
 
 @MainActor
 final class XToolDevViewModel: ObservableObject {
     let server: XToolDevServer
     @Published var tokenVisible = false
     @Published var copiedMessage: String?
+    private var serverObservation: AnyCancellable?
 
-    init(server: XToolDevServer? = nil) { self.server = server ?? XToolDevServer() }
+    init(server: XToolDevServer? = nil) {
+        let server = server ?? XToolDevServer()
+        self.server = server
+        serverObservation = server.objectWillChange
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+    }
 
     var token: String { server.pairingToken ?? "Unavailable" }
 
