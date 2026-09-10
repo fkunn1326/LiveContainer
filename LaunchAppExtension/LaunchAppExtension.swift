@@ -191,7 +191,7 @@ struct LaunchAppExtension: AppIntent {
         } else {
             newLaunch = true
             if isSharedApp {
-                schemeToLaunch = firstFreeInstalledLC(preferredScheme: preferredScheme)
+                schemeToLaunch = firstFreeInstalledLC(preferredScheme: ownScheme)
                 allowClassicMode = schemeToLaunch != nil
             } else {
                 schemeToLaunch = ownScheme
