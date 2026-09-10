@@ -40,6 +40,14 @@ struct MultitaskAppInfo {
         }
         return false
     }
+
+    @objc class func removeAppWindow(dataUUID: String) {
+        appDict.removeValue(forKey: dataUUID)
+        let sessions = UIApplication.shared.connectedScenes.compactMap { $0.session }
+        for session in sessions where session.persistentIdentifier == dataUUID {
+            UIApplication.shared.requestSceneSessionDestruction(session, options: nil, errorHandler: nil)
+        }
+    }
 }
 
 @available(iOS 16.1, *)
@@ -51,22 +59,27 @@ struct AppSceneViewSwiftUI: UIViewControllerRepresentable {
     let onAppInitialize: (Int32, Error?) -> Void
     
     class Coordinator: NSObject, AppSceneViewControllerDelegate {
+        let dataUUID: String
         let onExit: () -> Void
         let onAppInitialize: (Int32, Error?) -> Void
-        init(onAppInitialize: @escaping (Int32, Error?) -> Void, onExit: @escaping () -> Void) {
+        init(dataUUID: String, onAppInitialize: @escaping (Int32, Error?) -> Void, onExit: @escaping () -> Void) {
+            self.dataUUID = dataUUID
             self.onAppInitialize = onAppInitialize
             self.onExit = onExit
         }
         
         func appSceneVCAppDidExit(_: AppSceneViewController!) {
+            XToolGuestProcessRegistry.shared.didExit(dataUUID: dataUUID)
             onExit()
         }
         
         func appSceneVC(_ vc: AppSceneViewController!, didInitializeWithError error: (any Error)!) {
+            XToolGuestProcessRegistry.shared.register(controller: vc, dataUUID: dataUUID, bundlePath: vc.bundleId)
             DispatchQueue.main.async {
                 (vc.view.window?.windowScene?.statusBarManager as? LCStatusBarManager)?.nativeWindowViewController = vc
             }
             onAppInitialize(vc.pid, error)
+            XToolGuestProcessRegistry.shared.didInitialize(dataUUID: dataUUID, pid: vc.pid, error: error)
         }
         
         func appSceneVCWillActivateScene(_ vc: AppSceneViewController!) {
@@ -100,13 +113,15 @@ struct AppSceneViewSwiftUI: UIViewControllerRepresentable {
     }
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(onAppInitialize: onAppInitialize, onExit: {
+        Coordinator(dataUUID: dataUUID, onAppInitialize: onAppInitialize, onExit: {
             show = false
         })
     }
     
     func makeUIViewController(context: Context) -> UIViewController {
-        return AppSceneViewController(bundleId: bundleId, dataUUID: dataUUID, delegate: context.coordinator)
+        let controller = AppSceneViewController(bundleId: bundleId, dataUUID: dataUUID, delegate: context.coordinator)
+        XToolGuestProcessRegistry.shared.register(controller: controller, dataUUID: dataUUID, bundlePath: bundleId)
+        return controller
     }
     
     func updateUIViewController(_ vc: UIViewController, context _: Context) {
@@ -236,6 +251,7 @@ class MultitaskRelaunchManager: NSObject {
     private static let pendingLock = NSLock()
     
     static func scheduleRelaunchIfNeeded(bundleId: String, dataUUID: String, isManualTermination: Bool) {
+        guard !XToolDevRestartGate.isSuppressed(dataUUID: dataUUID) else { return }
         let defaults = LCUtils.appGroupUserDefault
         let multitaskMode = MultitaskMode(rawValue: defaults.integer(forKey: "LCMultitaskMode")) ?? .virtualWindow
         guard defaults.bool(forKey: "LCSkipTerminatedScreen"),

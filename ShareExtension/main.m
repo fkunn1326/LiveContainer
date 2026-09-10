@@ -28,7 +28,7 @@ static Class _LSOpenConfigurationClass;
 
     NSString* bundleIdToLaunch = nil;
     NSString* scheme = url.scheme;
-    if([scheme isEqualToString:@"livecontainer"] || [scheme isEqualToString:@"sidestore"]) {
+    if([scheme isEqualToString:@"xtoolrunner"] || [scheme isEqualToString:@"sidestore"]) {
         bundleIdToLaunch = NSBundle.mainBundle.bundleIdentifier.stringByDeletingPathExtension;
     } else {
         bundleIdToLaunch = [NSUserDefaults.lcSharedDefaults stringForKey:[NSString stringWithFormat:@"LCBundleID.%@", scheme]];

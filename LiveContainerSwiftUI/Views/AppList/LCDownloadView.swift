@@ -32,7 +32,7 @@ public final class DownloadHelper : ObservableObject {
         await withUnsafeContinuation { c in
             continuation = c
             
-            let bgConfig = URLSessionConfiguration.background(withIdentifier: "com.livecontainer.download.\(UUID().uuidString)")
+            let bgConfig = URLSessionConfiguration.background(withIdentifier: "com.xtool.runner.download.\(UUID().uuidString)")
             let session = URLSession(configuration: bgConfig, delegate: DownloadDelegate(progressCallback: { progress, downloaded, total in
                 Task{ await MainActor.run {
                     self.downloadProgress = progress

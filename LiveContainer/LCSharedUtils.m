@@ -58,6 +58,7 @@ NSString* FBSOpenApplicationOptionKeyPayloadURL = @"__PayloadURL";
     static NSString *appGroupID = @"Unknown";
     dispatch_once(&once, ^{
         NSArray* possibleAppGroups = @[
+            [@"group.com.xtool.runner." stringByAppendingString:[self teamIdentifier]],
             [@"group.com.SideStore.SideStore." stringByAppendingString:[self teamIdentifier]],
             [@"group.com.rileytestut.AltStore." stringByAppendingString:[self teamIdentifier]]
         ];
@@ -216,7 +217,7 @@ NSString* FBSOpenApplicationOptionKeyPayloadURL = @"__PayloadURL";
     static NSURL *infoPath;
     
     dispatch_once(&once, ^{
-        infoPath = [[LCSharedUtils appGroupPath] URLByAppendingPathComponent:@"LiveContainer/containerLock.plist"];
+        infoPath = [[LCSharedUtils appGroupPath] URLByAppendingPathComponent:@"XToolRunner/containerLock.plist"];
     });
     return infoPath;
 }
@@ -301,7 +302,7 @@ NSString* FBSOpenApplicationOptionKeyPayloadURL = @"__PayloadURL";
         .lastObject;
     NSURL *docPathUrl = [fm URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask]
         .lastObject;
-    NSURL *appGroupFolder = [[LCSharedUtils appGroupPath] URLByAppendingPathComponent:@"LiveContainer"];
+    NSURL *appGroupFolder = [[LCSharedUtils appGroupPath] URLByAppendingPathComponent:@"XToolRunner"];
     
     NSError *error;
     NSString *sharedAppDataFolderPath = [libraryPathUrl.path stringByAppendingPathComponent:@"SharedDocuments"];
@@ -350,7 +351,7 @@ NSString* FBSOpenApplicationOptionKeyPayloadURL = @"__PayloadURL";
 
     // not found locally, let's look for the app in shared folder
     if (!appBundle) {
-        appGroupFolder = [[LCSharedUtils appGroupPath] URLByAppendingPathComponent:@"LiveContainer"];
+        appGroupFolder = [[LCSharedUtils appGroupPath] URLByAppendingPathComponent:@"XToolRunner"];
         
         bundlePath = [NSString stringWithFormat:@"%@/Applications/%@", appGroupFolder.path, bundleId];
         if([NSFileManager.defaultManager fileExistsAtPath:bundlePath]) {
@@ -391,7 +392,7 @@ NSString* FBSOpenApplicationOptionKeyPayloadURL = @"__PayloadURL";
 
 + (NSString*)findDefaultContainerWithBundleId:(NSString*)bundleId {
     // find app's default container
-    NSURL* appGroupFolder = [[LCSharedUtils appGroupPath] URLByAppendingPathComponent:@"LiveContainer"];
+    NSURL* appGroupFolder = [[LCSharedUtils appGroupPath] URLByAppendingPathComponent:@"XToolRunner"];
     
     NSString* bundleInfoPath = [NSString stringWithFormat:@"%@/Applications/%@/LCAppInfo.plist", appGroupFolder.path, bundleId];
     NSDictionary* infoDict = [NSDictionary dictionaryWithContentsOfFile:bundleInfoPath];
@@ -399,7 +400,7 @@ NSString* FBSOpenApplicationOptionKeyPayloadURL = @"__PayloadURL";
 }
 
 + (NSArray<NSString*>*)lcUnorderedUrlSchemes {
-    NSArray<NSString *> *defaultSchemes = @[@"livecontainer", @"livecontainer2", @"livecontainer3"];
+    NSArray<NSString *> *defaultSchemes = @[@"xtoolrunner"];
     return defaultSchemes;
 }
 

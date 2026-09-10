@@ -42,7 +42,7 @@ void NSFMGuestHooksInit(void) {
     if(isolateAppGroup) {
         result = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%s/LCAppGroup/%@", getenv("HOME"), groupIdentifier]];
     } else if (NSUserDefaults.lcAppGroupPath){
-        result = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/LiveContainer/Data/AppGroup/%@", NSUserDefaults.lcAppGroupPath, groupIdentifier]];
+        result = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/XToolRunner/Data/AppGroup/%@", NSUserDefaults.lcAppGroupPath, groupIdentifier]];
     } else {
         result = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%s/Documents/Data/AppGroup/%@", getenv("LC_HOME_PATH"), groupIdentifier]];
     }

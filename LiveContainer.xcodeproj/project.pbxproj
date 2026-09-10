@@ -1099,7 +1099,7 @@
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kdt.livecontainer.SideStoreSupport;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xtool.runner.SideStoreSupport;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -1141,7 +1141,7 @@
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kdt.livecontainer.SideStoreSupport;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xtool.runner.SideStoreSupport;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -1188,7 +1188,7 @@
 					"-DCONFIG_COMMIT=\\\"$(CONFIG_COMMIT)\\\"",
 				);
 				OTHER_LDFLAGS = "-Wl,-U,_OBJC_CLASS_$_RBSTarget";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kdtLiveContainerSwiftUI;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xtool.runner.LiveContainerSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -1231,7 +1231,7 @@
 					"-DCONFIG_COMMIT=\\\"$(CONFIG_COMMIT)\\\"",
 				);
 				OTHER_LDFLAGS = "-Wl,-U,_OBJC_CLASS_$_RBSTarget";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kdtLiveContainerSwiftUI;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xtool.runner.LiveContainerSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -1909,7 +1909,7 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				OTHER_CFLAGS = "-fcommon";
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kdt.livecontainer.LiveContainerShared;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xtool.runner.LiveContainerShared;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = debugging;
@@ -1951,7 +1951,7 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				OTHER_CFLAGS = "-fcommon";
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kdt.livecontainer.LiveContainerShared;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xtool.runner.LiveContainerShared;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = debugging;

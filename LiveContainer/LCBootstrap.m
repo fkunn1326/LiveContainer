@@ -289,7 +289,7 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
     // not found locally, let's look for the app in shared folder
     if(!guestAppInfo) {
         NSURL *appGroupPath = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:[LCSharedUtils appGroupID]];
-        appGroupFolder = [appGroupPath URLByAppendingPathComponent:@"LiveContainer"];
+        appGroupFolder = [appGroupPath URLByAppendingPathComponent:@"XToolRunner"];
         bundlePath = [NSString stringWithFormat:@"%@/Applications/%@", appGroupFolder.path, selectedApp];
         guestAppInfo = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/LCAppInfo.plist", bundlePath]];
         isSharedBundle = true;
@@ -711,7 +711,7 @@ int LiveContainerMain(int argc, char *argv[]) {
         NSString* lastLaunchType = [lcUserDefaults objectForKey:@"lastLaunchType"];
         NSString* preferencesTo;
         if([lastLaunchType isEqualToString:@"Shared"]) {
-            preferencesTo = [LCSharedUtils.appGroupPath.path stringByAppendingPathComponent:[NSString stringWithFormat:@"LiveContainer/Data/Application/%@/Library/Preferences", lastLaunchDataUUID]];
+            preferencesTo = [LCSharedUtils.appGroupPath.path stringByAppendingPathComponent:[NSString stringWithFormat:@"XToolRunner/Data/Application/%@/Library/Preferences", lastLaunchDataUUID]];
         } else {
             NSString *docPath = [NSString stringWithFormat:@"%s/Documents", getenv("LC_HOME_PATH")];
             preferencesTo = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Data/Application/%@/Library/Preferences", lastLaunchDataUUID]];
@@ -857,7 +857,7 @@ int LiveContainerMain(int argc, char *argv[]) {
         NSString *tweakFolder = nil;
         if (isSharedBundle) {
             NSURL *appGroupPath = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:[LCSharedUtils appGroupID]];
-            tweakFolder = [appGroupPath.path stringByAppendingPathComponent:@"LiveContainer/Tweaks"];
+            tweakFolder = [appGroupPath.path stringByAppendingPathComponent:@"XToolRunner/Tweaks"];
         } else {
             NSString *docPath = [NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].lastObject.path;
             tweakFolder = [docPath stringByAppendingPathComponent:@"Tweaks"];

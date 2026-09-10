@@ -67,11 +67,11 @@ static id SSSceneObserver;
 @implementation NSBundle(SideStoreHooks)
 
 + (NSString*)hook_appbundleIdentifier {
-    return @"com.kdt.livecontainer";
+    return NSBundle.mainBundle.bundleIdentifier ?: @"com.xtool.runner";
 }
 
 + (NSString*)hook_storeAppBundleIdentifier {
-    return @"com.kdt.livecontainer";
+    return NSBundle.mainBundle.bundleIdentifier ?: @"com.xtool.runner";
 }
 
 - (NSString*)hook_altstoreAppGroup {

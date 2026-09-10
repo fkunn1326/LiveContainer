@@ -81,14 +81,8 @@ struct LaunchAppExtension: AppIntent {
     func perform() async throws -> some IntentResult {
         // sanitize url
         let normalizedLaunchScheme = launchURL.scheme?.lowercased()
-        var isLiveContainerURL = normalizedLaunchScheme == "livecontainer"
-        let preferredScheme = isLiveContainerURL ? nil : (normalizedLaunchScheme == "livecontainer1" ? "livecontainer" : normalizedLaunchScheme)
-        
-        if let preferredScheme, let schemes = LCSharedUtils.lcUnorderedUrlSchemes() {
-            isLiveContainerURL = schemes.contains(preferredScheme)
-        }
-        
-        if !isLiveContainerURL && normalizedLaunchScheme != "sidestore" {
+        let ownScheme = "xtoolrunner"
+        if normalizedLaunchScheme != ownScheme && normalizedLaunchScheme != "sidestore" {
             throw LaunchAppExtensionError("Not a livecontainer URL!")
         }
         
@@ -100,7 +94,7 @@ struct LaunchAppExtension: AppIntent {
         }
         
         if normalizedLaunchScheme == "sidestore" {
-            lcSharedDefaults.set("livecontainer", forKey: "LCLaunchExtensionScheme")
+            lcSharedDefaults.set(ownScheme, forKey: "LCLaunchExtensionScheme")
             lcSharedDefaults.set("builtinSideStore", forKey: "LCLaunchExtensionBundleID")
             lcSharedDefaults.set(Date.now, forKey: "LCLaunchExtensionLaunchDate")
             try await openURL(launchOptions: ["url": launchURL])
@@ -200,8 +194,8 @@ struct LaunchAppExtension: AppIntent {
                 schemeToLaunch = firstFreeInstalledLC(preferredScheme: preferredScheme)
                 allowClassicMode = schemeToLaunch != nil
             } else {
-                schemeToLaunch = "livecontainer"
-                allowClassicMode = !LCSharedUtils.isLCScheme(inUse: "livecontainer")
+                schemeToLaunch = ownScheme
+                allowClassicMode = !LCSharedUtils.isLCScheme(inUse: ownScheme)
             }
         }
 

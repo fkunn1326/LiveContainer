@@ -297,9 +297,9 @@ final class LCAppBannerViewController: UIViewController, UIContextMenuInteractio
         }
 
         if let folderName = configuration.model.uiSelectedContainer?.folderName {
-            UIPasteboard.general.string = "livecontainer://livecontainer-launch?bundle-name=\(relativeBundlePath)&container-folder-name=\(folderName)"
+            UIPasteboard.general.string = "xtoolrunner://livecontainer-launch?bundle-name=\(relativeBundlePath)&container-folder-name=\(folderName)"
         } else {
-            UIPasteboard.general.string = "livecontainer://livecontainer-launch?bundle-name=\(relativeBundlePath)"
+            UIPasteboard.general.string = "xtoolrunner://livecontainer-launch?bundle-name=\(relativeBundlePath)"
         }
     }
 

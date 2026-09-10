@@ -194,6 +194,32 @@ Open Xcode, edit `DEVELOPMENT_TEAM[config=Debug]` in `xcconfigs/Global.xcconfig`
 ## TODO
 - Use ChOma instead of custom MachO parser
 
+## XTool Runner fast restart
+
+The Developer tab contains the opt-in XTool Runner server. Start it explicitly,
+copy the displayed base64url token, and run the host command:
+
+```bash
+xtool dev live --host 192.168.1.50 --token '<token>'
+```
+
+Use `--once` for one build/deploy. The Runner stages, validates, patches, and
+signs the IPA before stopping the guest. A successful swap keeps the existing
+`dataUUID`; a failed launch restores the journaled bundle and restarts the old
+guest. Managed app records are stored in Application Support and deployment
+journals are retained until a transaction commits.
+
+Protocol v1 does not encrypt the IPA payload.
+Use only on a trusted local network.
+Do not expose the Runner port to the Internet.
+
+The Runner fork uses a separate identity from the regular LiveContainer build:
+`com.xtool.runner` / `xtoolrunner://`, a team-specific
+`group.com.xtool.runner.<TEAM_ID>` app group, and
+`com.xtool.runner.shared*` keychain groups. Register the Runner app group
+with the signing team before installing it alongside an existing LiveContainer.
+Runner intentionally does not share the regular LiveContainer URL/data namespace.
+
 ## License
 [GNU Affero General Public License v3.0](https://github.com/LiveContainer/LiveContainer/blob/main/LICENSE)
 

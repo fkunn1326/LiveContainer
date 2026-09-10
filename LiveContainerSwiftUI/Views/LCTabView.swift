@@ -48,6 +48,13 @@ struct LCTabView: View {
                     Label("lc.tabView.settings".loc, systemImage: "gearshape.fill")
                 }
                 .tag(LCTabIdentifier.settings)
+            if sharedModel.developerMode {
+                XToolDevView()
+                    .tabItem {
+                        Label("Developer", systemImage: "hammer")
+                    }
+                    .tag(LCTabIdentifier.developer)
+            }
         }
         .downloadAlert(helper: downloadHelper)
         .environmentObject(downloadHelper)
